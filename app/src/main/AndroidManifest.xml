@@ -13,6 +13,48 @@
         android:theme="@style/Theme.HabeetAndroid"
         tools:targetApi="31">
         <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PrivacyPolicyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserAgreementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginNavActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HelperActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StoreActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TagActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TargetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TimeActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
