@@ -2,4 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="hui">#808191</color>
+    <color name="danHui">#f6f7fb</color>
+    <color name="lv">#bbffe7</color>
+    <color name="danZi">#e9e9ff</color>
+    <color name="danDanZi">#cfc8ff</color>
+    <color name="zi">#6c5dd3</color>
+    <color name="lan">#6495ED</color>
 </resources>

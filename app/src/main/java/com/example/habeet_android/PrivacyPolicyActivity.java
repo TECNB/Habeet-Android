@@ -9,6 +9,6 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_privacy_policy_view);
+        setContentView(R.layout.activity_privacy_policy);
     }
 }
