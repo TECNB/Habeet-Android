@@ -90,13 +90,18 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp">
-            <Button
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="登录"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:background="@color/danZi" />
+                android:background="@color/zi">
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="登录"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:backgroundTint="@color/zi" />
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
 
     </LinearLayout>
