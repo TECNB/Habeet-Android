@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,82 +10,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="15dp">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="1dp"
-            tools:ignore="MissingConstraints">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/menu"
-                android:id="@+id/timerNav1left"/>
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="60dp"
-                android:layout_height="match_parent"
-                android:text="TEC"
-                android:gravity="center"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="110dp"
-                android:layout_toRightOf="@+id/timerNav1left"/>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                app:cardCornerRadius="20dp"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="15dp"
-                app:cardElevation="0dp"
-                android:layout_toLeftOf="@+id/timerNav1right">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@color/danHui"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"
-                        android:text="Points"
-                        android:textColor="@color/zi"
-                        android:gravity="center"/>
-
-                    <TextView
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:rotationX="-2"
-                        android:text="105"
-                        android:textColor="@color/danDanZi" />
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:src="@drawable/coin"
-                        android:layout_gravity="center"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/timerNav1right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="20dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true">
-                <ImageView
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:src="@drawable/avatar"
-                    android:background="@color/lv"/>
-
-            </androidx.cardview.widget.CardView>
-        </RelativeLayout>
+        <include layout="@layout/activity_nav" android:id="@+id/Nav"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -177,14 +102,13 @@
                             <Button
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
+                                android:backgroundTint="@color/zi"
+                                android:paddingRight="30dp"
                                 android:text="X1"
                                 android:textStyle="bold"
-                                android:paddingRight="30dp"
-                                android:backgroundTint="@color/zi"/>
+                                tools:ignore="TouchTargetSizeCheck" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
-
-
                 </LinearLayout>
 
             </LinearLayout>
@@ -209,4 +133,5 @@
                 android:background="@color/zi"/>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <include android:id="@+id/drawerMenu" layout="@layout/activity_drawer_menu" android:visibility="invisible"/>
+</androidx.drawerlayout.widget.DrawerLayout>
