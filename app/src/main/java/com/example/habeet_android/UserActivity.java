@@ -2,10 +2,19 @@ package com.example.habeet_android;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import com.google.android.material.navigation.NavigationView;
+
+import Util.DrawerMenuHelper;
 
 public class UserActivity extends AppCompatActivity {
 
@@ -14,11 +23,7 @@ public class UserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
-        // 获取activity_nav.xml中的根布局
-        View Nav = findViewById(R.id.Nav);
-        // 获取navPoint和navAvatar控件
-        ImageView navDelete = Nav.findViewById(R.id.navDelete);
-        // 设置它们的visibility为GONE
-        navDelete.setVisibility(View.GONE);
+        DrawerMenuHelper drawerMenuHelper = new DrawerMenuHelper(this);
+        drawerMenuHelper.setupDrawerMenu(4);
     }
 }

@@ -1,10 +1,10 @@
 package com.example.habeet_android;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
 import android.os.Bundle;
-import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import Util.DrawerMenuHelper;
 
 public class TargetActivity extends AppCompatActivity {
 
@@ -13,13 +13,7 @@ public class TargetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_target);
 
-        // 获取activity_nav.xml中的根布局
-        View Nav = findViewById(R.id.Nav);
-        // 获取navPoint和navAvatar控件
-        CardView navPoint = Nav.findViewById(R.id.navPoint);
-        CardView navAvatar = Nav.findViewById(R.id.navAvatar);
-        // 设置它们的visibility为GONE
-        navPoint.setVisibility(View.GONE);
-        navAvatar.setVisibility(View.GONE);
+        DrawerMenuHelper drawerMenuHelper = new DrawerMenuHelper(this);
+        drawerMenuHelper.setupDrawerMenu(1);
     }
 }

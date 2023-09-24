@@ -46,12 +46,13 @@
             android:layout_weight="4"
             android:orientation="vertical">
             <androidx.cardview.widget.CardView
-                android:id="@+id/drawerMenuTo1"
+                android:id="@+id/drawerMenuTo1A"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:cardElevation="0dp"
                 app:cardCornerRadius="10dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="20dp"
+                android:visibility="gone">
                 <LinearLayout
                     android:layout_width="190dp"
                     android:layout_height="40dp"
@@ -88,7 +89,75 @@
             </androidx.cardview.widget.CardView>
 
             <LinearLayout
-                android:id="@+id/drawerMenuTo2"
+                android:id="@+id/drawerMenuTo1B"
+                android:layout_width="190dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="20dp">
+
+                <LinearLayout
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_marginRight="10dp">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/countdownbefore" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="专注"
+                    android:layout_gravity="center"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/drawerMenuTo2A"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="gone">
+                <LinearLayout
+                    android:layout_width="190dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/gradient_background_blue">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        app:cardCornerRadius="10dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/gradient_background_purple"
+                            android:gravity="center">
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/targetafter" />
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="目标"
+                        android:layout_gravity="center"
+                        android:textColor="@color/zi"
+                        android:textSize="18sp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <LinearLayout
+                android:id="@+id/drawerMenuTo2B"
                 android:layout_width="190dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="20dp">
@@ -111,7 +180,51 @@
                     android:textSize="18sp"/>
             </LinearLayout>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/drawerMenuTo3A"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="gone">
+                <LinearLayout
+                    android:layout_width="190dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/gradient_background_blue">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        app:cardCornerRadius="10dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/gradient_background_purple"
+                            android:gravity="center">
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/tagafter" />
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="标签"
+                        android:layout_gravity="center"
+                        android:textColor="@color/zi"
+                        android:textSize="18sp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
             <LinearLayout
+                android:id="@+id/drawerMenuTo3B"
                 android:layout_width="190dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="20dp">
@@ -134,7 +247,51 @@
                     android:textSize="18sp"/>
             </LinearLayout>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/drawerMenuTo4A"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="gone">
+                <LinearLayout
+                    android:layout_width="190dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/gradient_background_blue">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        app:cardCornerRadius="10dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/gradient_background_purple"
+                            android:gravity="center">
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/storeafter" />
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="商店"
+                        android:layout_gravity="center"
+                        android:textColor="@color/zi"
+                        android:textSize="18sp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
             <LinearLayout
+                android:id="@+id/drawerMenuTo4B"
                 android:layout_width="190dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="20dp">
@@ -158,6 +315,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/drawerMenuTo5B"
                 android:layout_width="190dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="20dp">
@@ -180,7 +338,94 @@
                     android:textSize="18sp"/>
             </LinearLayout>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/drawerMenuTo5A"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="gone">
+                <LinearLayout
+                    android:layout_width="190dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/gradient_background_blue">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        app:cardCornerRadius="10dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/gradient_background_purple"
+                            android:gravity="center">
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/userafter" />
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="我的"
+                        android:layout_gravity="center"
+                        android:textColor="@color/zi"
+                        android:textSize="18sp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/drawerMenuTo6A"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="gone">
+                <LinearLayout
+                    android:layout_width="190dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/gradient_background_blue">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        app:cardCornerRadius="10dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/gradient_background_purple"
+                            android:gravity="center">
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/settingafter" />
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="设置"
+                        android:layout_gravity="center"
+                        android:textColor="@color/zi"
+                        android:textSize="18sp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
             <LinearLayout
+                android:id="@+id/drawerMenuTo6B"
                 android:layout_width="190dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="20dp">
@@ -203,7 +448,51 @@
                     android:textSize="18sp"/>
             </LinearLayout>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/drawerMenuTo7A"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="gone">
+                <LinearLayout
+                    android:layout_width="190dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/gradient_background_blue">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        app:cardCornerRadius="10dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/gradient_background_purple"
+                            android:gravity="center">
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/helpafter" />
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="关于"
+                        android:layout_gravity="center"
+                        android:textColor="@color/zi"
+                        android:textSize="18sp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
             <LinearLayout
+                android:id="@+id/drawerMenuTo7B"
                 android:layout_width="190dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="20dp">
