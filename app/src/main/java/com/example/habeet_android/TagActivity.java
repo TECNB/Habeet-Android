@@ -1,9 +1,12 @@
 package com.example.habeet_android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,6 +42,16 @@ public class TagActivity extends AppCompatActivity {
         DrawerMenuHelper drawerMenuHelper = new DrawerMenuHelper(this);
         drawerMenuHelper.setupDrawerMenu(2);
 
+        CardView cardView=findViewById(R.id.TagCardView);
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //监听按钮，如果点击，就跳转
+                startActivity(CreatActivity.class);
+                Log.v("drawerMenu","点击抽屉的第一个按钮");
+            }
+        });
+
         // 初始化RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -51,13 +64,18 @@ public class TagActivity extends AppCompatActivity {
         recyclerView.setAdapter(tagAdapter);
 
         // 启动异步任务来执行网络请求
-        performNetworkRequest();
-
+        fetchTagData();
 
     }
 
+    private void startActivity(Class<?> cls) {
+        Intent intent = new Intent(this, cls);
+        this.startActivity(intent);
+        this.finish(); // 关闭当前活动
+    }
+
     // 执行网络请求的方法
-    private void performNetworkRequest() {
+    private void fetchTagData() {
         OkHttpClient client = new OkHttpClient();
         // 请求URL
         String url = "https://tengenchang.top/tag/get";
