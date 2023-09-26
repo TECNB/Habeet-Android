@@ -1,4 +1,4 @@
-package Util;
+package Adapter;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.habeet_android.R;
@@ -19,7 +18,7 @@ import com.example.habeet_android.R;
 import java.io.IOException;
 import java.util.List;
 
-import Item.TagItem;
+import Item.TargetItem;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -28,14 +27,14 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
+public class TargetWithTimeAdapter extends RecyclerView.Adapter<TargetWithTimeAdapter.ViewHolder> {
 
-    private List<TagItem> tagItemList;
+    private List<TargetItem> targetItemList;
     private int visibilityState1 = View.VISIBLE;
     private int visibilityState2 = View.GONE;
 
-    public TagAdapter(List<TagItem> tagItemList) {
-        this.tagItemList = tagItemList;
+    public TargetWithTimeAdapter(List<TargetItem> targetItemList) {
+        this.targetItemList = targetItemList;
         // 初始化可见性状态
         this.visibilityState1 = View.VISIBLE;
         this.visibilityState2 = View.GONE;
@@ -44,16 +43,17 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tag, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_target_withtime, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        TagItem tagItem = tagItemList.get(position);
-        System.out.println(tagItem.getTagName());
-        holder.tagNameTextView.setText(tagItem.getTagName());
-        holder.tagDescriptionTextView.setText(tagItem.getTagDescription());
+        TargetItem targetItem = targetItemList.get(position);
+        System.out.println(targetItem.getTargetName());
+        holder.targetNameTextView.setText(targetItem.getTargetName());
+        holder.targetDescriptionTextView.setText(targetItem.getTargetDescribe());
+        holder.targetWithTimePointTextView.setText("X"+targetItem.getTargetPoint());
 
         holder.navDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,31 +66,6 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
                 notifyDataSetChanged();
             }
         });
-
-        // 设置detailEdit的可见性状态
-        holder.detailEdit.setVisibility(visibilityState1);
-        // 设置detailDelete的可见性状态
-        holder.detailDelete.setVisibility(visibilityState2);
-
-        holder.detailDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteTag(tagItem, holder.getAdapterPosition(), holder.itemView.getContext());
-            }
-        });
-
-        // 添加渐变动画效果
-        if (visibilityState1 == View.VISIBLE) {
-            animateView(holder.detailEdit, true);
-        } else {
-            animateView(holder.detailEdit, false);
-        }
-
-        if (visibilityState2 == View.VISIBLE) {
-            animateView(holder.detailDelete, true);
-        } else {
-            animateView(holder.detailDelete, false);
-        }
     }
 
     // 辅助方法来执行渐变动画
@@ -104,12 +79,12 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
         alphaAnimator.start();
     }
 
-    private void deleteTag(TagItem tagItem, int position, Context context) {
+    private void deleteTarget(TargetItem targetItem, int position, Context context) {
         OkHttpClient client = new OkHttpClient();
         // 请求URL
-        String url = "https://tengenchang.top/tag/delete";
+        String url = "https://tengenchang.top/target/delete";
         // 请求数据
-        String requestData = tagItem.getTagName();
+        String requestData = targetItem.getTargetName();
         // 设置请求体
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(JSON, requestData);
@@ -125,7 +100,7 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     // 从数据源中删除项
-                    tagItemList.remove(position);
+                    targetItemList.remove(position);
 
                     // 通知适配器删除了特定位置的项
                     ((Activity) context).runOnUiThread(new Runnable() {
@@ -139,13 +114,13 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
                     ((Activity) context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            notifyItemRangeChanged(position, tagItemList.size());
+                            notifyItemRangeChanged(position, targetItemList.size());
                         }
                     });
                 } else {
                     // 请求失败，输出错误信息
-                    Log.e("TagActivity", "请求失败，状态码: " + response.code());
-                    Log.e("TagActivity", response.body().string());
+                    Log.e("TargetActivity", "请求失败，状态码: " + response.code());
+                    Log.e("TargetActivity", response.body().string());
                 }
             }
 
@@ -158,29 +133,27 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return tagItemList.size();
+        return targetItemList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tagNameTextView;
-        TextView tagDescriptionTextView;
+        TextView targetNameTextView;
+        TextView targetDescriptionTextView;
+        TextView targetWithTimePointTextView;
 
         // 获取activity_nav.xml中的根布局
         View Nav;
         ImageView navDelete;
 
-        CardView detailEdit;
-        CardView detailDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tagNameTextView = itemView.findViewById(R.id.tagName);
-            tagDescriptionTextView = itemView.findViewById(R.id.tagDescription);
+            targetNameTextView = itemView.findViewById(R.id.targetWithTimeName);
+            targetDescriptionTextView = itemView.findViewById(R.id.targetWithTimeDescribe);
+            targetWithTimePointTextView = itemView.findViewById(R.id.targetWithTimePoint);
 
             Nav = ((Activity) itemView.getContext()).findViewById(R.id.Nav);
             navDelete = Nav.findViewById(R.id.navDelete);
-            detailEdit = itemView.findViewById(R.id.detailEdit);
-            detailDelete = itemView.findViewById(R.id.detailDelete);
         }
     }
 }

@@ -20,7 +20,7 @@ import java.util.List;
 
 import Item.TagItem;
 import Util.DrawerMenuHelper;
-import Util.TagAdapter;
+import Adapter.TagAdapter;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -41,6 +41,7 @@ public class TagActivity extends AppCompatActivity {
         // 设置侧边栏菜单
         DrawerMenuHelper drawerMenuHelper = new DrawerMenuHelper(this);
         drawerMenuHelper.setupDrawerMenu(2);
+        drawerMenuHelper.getUserData();
 
         CardView cardView=findViewById(R.id.TagCardView);
         cardView.setOnClickListener(new View.OnClickListener() {

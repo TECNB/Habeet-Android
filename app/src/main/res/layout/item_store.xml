@@ -8,7 +8,7 @@
     app:cardCornerRadius="20dp"
     android:layout_gravity="center"
     app:cardElevation="8dp"
-    android:layout_marginLeft="30dp"
+    android:layout_marginLeft="15dp"
     android:layout_marginRight="30dp"
     android:layout_marginTop="30dp">
     <LinearLayout
@@ -40,6 +40,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/storeName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="测试1"
@@ -49,20 +50,49 @@
                 android:gravity="center"
                 android:layout_marginTop="40dp"/>
             <TextView
+                android:id="@+id/storeDescribe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="hhhh"
                 android:textColor="@color/danDanZi"
                 android:gravity="center"
                 android:layout_marginTop="10dp"/>
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="0小时30分钟"
+                android:orientation="horizontal"
                 android:gravity="center"
-                android:textSize="14sp"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp">
+                <TextView
+                    android:id="@+id/storeHour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:gravity="center"
+                    android:textSize="14sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="小时"
+                    android:gravity="center"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/storeMinute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30"
+                    android:gravity="center"
+                    android:textSize="14sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="分钟"
+                    android:gravity="center"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
             <androidx.cardview.widget.CardView
+                android:id="@+id/storeDelete"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 app:cardCornerRadius="20dp"
@@ -80,16 +110,19 @@
                         android:layout_height="24dp"
                         android:src="@drawable/coin"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="20dp"/>
+                        android:layout_marginLeft="20dp" />
 
-                    <Button
+                    <TextView
+                        android:id="@+id/storePoint"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:backgroundTint="@color/zi"
-                        android:paddingRight="30dp"
+                        android:paddingLeft="20dp"
                         android:text="X1"
+                        android:gravity="center"
                         android:textStyle="bold"
-                        tools:ignore="TouchTargetSizeCheck" />
+                        tools:ignore="TouchTargetSizeCheck"
+                        android:textColor="@color/white"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>

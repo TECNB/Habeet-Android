@@ -32,7 +32,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
         <androidx.cardview.widget.CardView
-            android:id="@+id/TagCardView"
+            android:id="@+id/storeCardView"
             android:layout_width="70dp"
             android:layout_height="70dp"
             app:cardCornerRadius="40dp"

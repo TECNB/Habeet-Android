@@ -2,7 +2,7 @@ package Item;
 
 public class StoreItem {
     private String storeName;
-    private String storeDescription;
+    private String storeDescribe;
 
     private String storePoint;
 
@@ -21,17 +21,20 @@ public class StoreItem {
         isDetailsVisible = visible;
     }
 
-    public StoreItem(String storeName, String storeDescription) {
+    public StoreItem(String storeName, String storeDescribe,String storePoint,String storeHour,String storeMinute) {
         this.storeName = storeName;
-        this.storeDescription = storeDescription;
+        this.storeDescribe = storeDescribe;
+        this.storePoint = storePoint;
+        this.storeHour = storeHour;
+        this.storeMinute = storeMinute;
     }
 
     public String getStoreName() {
         return storeName;
     }
 
-    public String getStoreDescription() {
-        return storeDescription;
+    public String getStoreDescribe() {
+        return storeDescribe;
     }
 
     public String getStorePoint() {

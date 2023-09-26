@@ -15,5 +15,6 @@ public class SettingActivity extends AppCompatActivity {
 
         DrawerMenuHelper drawerMenuHelper = new DrawerMenuHelper(this);
         drawerMenuHelper.setupDrawerMenu(5);
+        drawerMenuHelper.getUserData();
     }
 }

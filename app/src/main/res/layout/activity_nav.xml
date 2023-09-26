@@ -15,9 +15,10 @@
         android:src="@drawable/menu"
         android:id="@+id/navMenu"/>
     <TextView
-        android:layout_width="60dp"
+        android:id="@+id/navNameTextView"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="TEC"
+        android:text="@string/userName"
         android:gravity="center"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -47,9 +48,10 @@
                 android:textColor="@color/zi"
                 android:gravity="center"/>
             <TextView
+                android:id="@+id/navPointTextView"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
-                android:text="105"
+                android:text="@string/userPont"
                 android:textColor="@color/danDanZi"
                 android:gravity="center"/>
             <ImageView
