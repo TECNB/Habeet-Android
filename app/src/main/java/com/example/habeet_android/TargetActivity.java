@@ -2,6 +2,8 @@ package com.example.habeet_android;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,6 +37,13 @@ public class TargetActivity extends AppCompatActivity {
     private List<TargetItem> targetWithTimeList;
     private List<TargetItem> targetNoTimeList;
 
+    private int targetVisibilityState1 = View.VISIBLE;
+    private int targetVisibilityState2 = View.GONE;
+
+
+    private View Nav;
+    ImageView navDelete;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +52,23 @@ public class TargetActivity extends AppCompatActivity {
         DrawerMenuHelper drawerMenuHelper = new DrawerMenuHelper(this);
         drawerMenuHelper.setupDrawerMenu(1);
         drawerMenuHelper.getUserData();
+
+        Nav = findViewById(R.id.Nav);
+        navDelete = Nav.findViewById(R.id.navDelete);
+
+        navDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 切换可见性状态
+                targetVisibilityState1 = (targetVisibilityState1 == View.GONE) ? View.VISIBLE : View.GONE;
+                targetVisibilityState2 = (targetVisibilityState2 == View.GONE) ? View.VISIBLE : View.GONE;
+
+                // 更新两个适配器的可见性状态
+                targetNoTimeAdapter.updateVisibility(targetVisibilityState1, targetVisibilityState2);
+                targetWithTimeAdapter.updateVisibility(targetVisibilityState1, targetVisibilityState2);
+            }
+        });
+
 
         // 初始化RecyclerView
         targetWithTimeRecyclerView = findViewById(R.id.targetWithTimeRecyclerView);
@@ -55,8 +81,8 @@ public class TargetActivity extends AppCompatActivity {
         targetNoTimeList = new ArrayList<>(); // 初始化 targetNoTimeList
 
         // 初始化适配器并将其与RecyclerView关联
-        targetWithTimeAdapter = new TargetWithTimeAdapter(targetWithTimeList);
-        targetNoTimeAdapter = new TargetNoTimeAdapter(targetNoTimeList);
+        targetWithTimeAdapter = new TargetWithTimeAdapter(targetWithTimeList,targetVisibilityState1, targetVisibilityState2);
+        targetNoTimeAdapter = new TargetNoTimeAdapter(targetNoTimeList,targetVisibilityState1, targetVisibilityState2);
 
         targetWithTimeRecyclerView.setAdapter(targetWithTimeAdapter);
         targetNoTimeRecyclerView.setAdapter(targetNoTimeAdapter);
@@ -110,17 +136,19 @@ public class TargetActivity extends AppCompatActivity {
                                 String targetDescribe = item.getString("targetDescribe");
                                 String targetPoint = item.getString("targetPoint");
                                 String deadline = item.getString("deadline");
+                                String targetId=item.getString("targetId");
 
                                 // 创建TargetItem对象并添加到targetList中
-                                targetNoTimeList.add(new TargetItem(targetName, targetDescribe,targetPoint,deadline));
+                                targetNoTimeList.add(new TargetItem(targetName, targetDescribe,targetPoint,deadline,targetId));
                             }else if(item.getString("status").equals("1")){
                                 String targetName = item.getString("targetName");
                                 String targetDescribe = item.getString("targetDescribe");
                                 String targetPoint = item.getString("targetPoint");
                                 String deadline = item.getString("deadline");
+                                String targetId=item.getString("targetId");
 
                                 // 创建TargetItem对象并添加到targetList中
-                                targetWithTimeList.add(new TargetItem(targetName, targetDescribe,targetPoint,deadline));
+                                targetWithTimeList.add(new TargetItem(targetName, targetDescribe,targetPoint,deadline,targetId));
                             }
 
                         }

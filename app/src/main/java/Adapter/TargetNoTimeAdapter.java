@@ -11,9 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.habeet_android.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,14 +33,14 @@ import okhttp3.Response;
 
 public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapter.ViewHolder>{
     private List<TargetItem> targetItemList;
-    private int visibilityState1 = View.VISIBLE;
-    private int visibilityState2 = View.GONE;
+    private int targetNoTimeVisibilityState1 = View.VISIBLE;
+    private int targetNoTimeVisibilityState2= View.GONE;
 
-    public TargetNoTimeAdapter(List<TargetItem> targetItemList) {
+    public TargetNoTimeAdapter(List<TargetItem> targetItemList, int visibilityState1, int visibilityState2) {
         this.targetItemList = targetItemList;
         // 初始化可见性状态
-        this.visibilityState1 = View.VISIBLE;
-        this.visibilityState2 = View.GONE;
+        this.targetNoTimeVisibilityState1 = visibilityState1;
+        this.targetNoTimeVisibilityState2 = visibilityState2;
     }
 
     @NonNull
@@ -54,22 +58,47 @@ public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapte
         holder.targetDescriptionTextView.setText(targetItem.getTargetDescribe());
         holder.targetNoTimePointTextView.setText("X"+targetItem.getTargetPoint());
 
-        holder.navDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 切换可见性状态
-                visibilityState1 = (visibilityState1 == View.GONE) ? View.VISIBLE : View.GONE;
-                visibilityState2 = (visibilityState2 == View.GONE) ? View.VISIBLE : View.GONE;
 
-                // 通知适配器数据已更改，以便刷新所有itemView
-                notifyDataSetChanged();
+        // 设置detailEdit的可见性状态
+        holder.targetNoTimePointCardView.setVisibility(targetNoTimeVisibilityState1);
+        holder.targetNoTimeDayDifference.setVisibility(targetNoTimeVisibilityState1);
+        // 设置detailDelete的可见性状态
+        holder.targetNoTimeDelete.setVisibility(targetNoTimeVisibilityState2);
+
+        holder.targetNoTimeDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteTarget(targetItem, holder.getAdapterPosition(), holder.itemView.getContext());
+            }
+        });
+        holder.targetNoTimePointCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finishTarget(targetItem, holder.getAdapterPosition(), holder.itemView.getContext());
             }
         });
 
+        // 添加渐变动画效果
+        if (targetNoTimeVisibilityState1 == View.VISIBLE) {
+            animateView(holder.targetNoTimePointCardView, true);
+            animateView(holder.targetNoTimeDayDifference, true);
+        } else {
+            animateView(holder.targetNoTimePointCardView, false);
+            animateView(holder.targetNoTimeDayDifference, false);
+        }
 
-
-
+        if (targetNoTimeVisibilityState2 == View.VISIBLE) {
+            animateView(holder.targetNoTimeDelete, true);
+        } else {
+            animateView(holder.targetNoTimeDelete, false);
+        }
     }
+    public void updateVisibility(int visibilityState1, int visibilityState2) {
+        targetNoTimeVisibilityState1 = visibilityState1;
+        targetNoTimeVisibilityState2 = visibilityState2;
+        notifyDataSetChanged();
+    }
+
 
     // 辅助方法来执行渐变动画
     private void animateView(View view, boolean show) {
@@ -86,11 +115,80 @@ public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapte
         OkHttpClient client = new OkHttpClient();
         // 请求URL
         String url = "https://tengenchang.top/target/delete";
-        // 请求数据
-        String requestData = targetItem.getTargetName();
+        System.out.println("targetId:"+targetItem.getTargetId());
+        // 创建JSON对象
+        JSONObject requestData = new JSONObject();
+        try {
+            requestData.put("userEmail", "3489044730@qq.com");
+            requestData.put("targetName", targetItem.getTargetName());
+            requestData.put("ifPoints", 0);
+            requestData.put("targetId", Long.valueOf(targetItem.getTargetId()));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         // 设置请求体
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        RequestBody requestBody = RequestBody.create(JSON, requestData);
+        RequestBody requestBody = RequestBody.create(JSON, requestData.toString());
+        // 创建POST请求
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+
+        // 使用OkHttp3执行异步网络请求
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    // 从数据源中删除项
+                    targetItemList.remove(position);
+
+                    // 通知适配器删除了特定位置的项
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            notifyItemRemoved(position);
+                        }
+                    });
+
+                    // 通知适配器更新从删除位置到列表末尾的所有项
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            notifyItemRangeChanged(position, targetItemList.size());
+                        }
+                    });
+                } else {
+                    // 请求失败，输出错误信息
+                    Log.e("TargetActivity", "请求失败，状态码: " + response.code());
+                    Log.e("TargetActivity", response.body().string());
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+    private void finishTarget(TargetItem targetItem, int position, Context context) {
+        OkHttpClient client = new OkHttpClient();
+        // 请求URL
+        String url = "https://tengenchang.top/target/delete";
+        System.out.println("targetId:"+targetItem.getTargetId());
+        // 创建JSON对象
+        JSONObject requestData = new JSONObject();
+        try {
+            requestData.put("userEmail", "3489044730@qq.com");
+            requestData.put("targetName", targetItem.getTargetName());
+            requestData.put("ifPoints", 1);
+            requestData.put("targetId", Long.valueOf(targetItem.getTargetId()));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        // 设置请求体
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody requestBody = RequestBody.create(JSON, requestData.toString());
         // 创建POST请求
         Request request = new Request.Builder()
                 .url(url)
@@ -148,6 +246,9 @@ public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapte
         View Nav;
         ImageView navDelete;
 
+        CardView targetNoTimePointCardView;
+        CardView targetNoTimeDelete;
+        TextView targetNoTimeDayDifference;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -157,7 +258,9 @@ public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapte
 
             Nav = ((Activity) itemView.getContext()).findViewById(R.id.Nav);
             navDelete = Nav.findViewById(R.id.navDelete);
-
+            targetNoTimePointCardView = itemView.findViewById(R.id.targetNoTimePointCardView);
+            targetNoTimeDelete = itemView.findViewById(R.id.targetNoTimeDelete);
+            targetNoTimeDayDifference = itemView.findViewById(R.id.targetNoTimeDayDifference);
         }
     }
 }
