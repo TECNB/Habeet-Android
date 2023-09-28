@@ -59,6 +59,7 @@ public class TargetWithTimeAdapter extends RecyclerView.Adapter<TargetWithTimeAd
         holder.targetNameTextView.setText(targetItem.getTargetName());
         holder.targetDescriptionTextView.setText(targetItem.getTargetDescribe());
         holder.targetWithTimePointTextView.setText("X"+targetItem.getTargetPoint());
+        holder.targetWithTimeDayDifference.setText(targetItem.getDayDifference());
 
 
 

@@ -1,9 +1,14 @@
 package com.example.habeet_android;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,8 +19,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import Adapter.TargetNoTimeAdapter;
 import Adapter.TargetWithTimeAdapter;
@@ -44,10 +54,16 @@ public class TargetActivity extends AppCompatActivity {
     private View Nav;
     ImageView navDelete;
 
+    private LinearLayout dateSelectorLayout;
+    private Calendar calendar = Calendar.getInstance();
+    private TextView lastSelectedDayTextView = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_target);
+
+
 
         DrawerMenuHelper drawerMenuHelper = new DrawerMenuHelper(this);
         drawerMenuHelper.setupDrawerMenu(1);
@@ -80,6 +96,13 @@ public class TargetActivity extends AppCompatActivity {
         targetWithTimeList = new ArrayList<>(); // 初始化 targetWithTimeList
         targetNoTimeList = new ArrayList<>(); // 初始化 targetNoTimeList
 
+        dateSelectorLayout = findViewById(R.id.dateSelectorLayout);
+
+        for (int index = 0; index < 30; index++) {
+            View dateItemView = createDateItemView(index,targetWithTimeList);
+            dateSelectorLayout.addView(dateItemView);
+        }
+
         // 初始化适配器并将其与RecyclerView关联
         targetWithTimeAdapter = new TargetWithTimeAdapter(targetWithTimeList,targetVisibilityState1, targetVisibilityState2);
         targetNoTimeAdapter = new TargetNoTimeAdapter(targetNoTimeList,targetVisibilityState1, targetVisibilityState2);
@@ -87,9 +110,157 @@ public class TargetActivity extends AppCompatActivity {
         targetWithTimeRecyclerView.setAdapter(targetWithTimeAdapter);
         targetNoTimeRecyclerView.setAdapter(targetNoTimeAdapter);
 
+
+
         // 启动异步任务来执行网络请求
         fetchTargetData();
     }
+
+
+    private View createDateItemView(final int index,final List<TargetItem> targetWithTimeList) {
+        // 获取当前日期
+        Date currentDate = calendar.getTime();
+        // 将日期向前或向后移动 index 天
+        calendar.add(Calendar.DAY_OF_MONTH, index);
+        // 获取新的日期
+        Date date = calendar.getTime();
+        // 恢复 calendar 到当前日期
+        calendar.setTime(currentDate);
+
+        // 创建日期的格式化工具，用于显示星期几和日期天数
+        SimpleDateFormat dayOfWeekFormat = new SimpleDateFormat("E");
+        SimpleDateFormat dayOfMonthFormat = new SimpleDateFormat("d");
+
+        // 创建日期项的布局参数，设置边距
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        layoutParams.setMargins(18, 0, 18, 0);
+
+        // 创建日期项的外层布局
+        RelativeLayout dateItemLayout = new RelativeLayout(this);
+        dateItemLayout.setLayoutParams(layoutParams);
+
+        // 创建显示星期几的文本视图
+        TextView dayOfWeekTextView = new TextView(this);
+        dayOfWeekTextView.setText(dayOfWeekFormat.format(date));
+        dayOfWeekTextView.setId(View.generateViewId());
+        dayOfWeekTextView.setTextColor(Color.GRAY);
+        dayOfWeekTextView.setTextSize(12);
+
+        // 设置星期几文本视图的布局参数，水平居中显示
+        RelativeLayout.LayoutParams dayOfWeekParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+        dayOfWeekParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        dayOfWeekTextView.setLayoutParams(dayOfWeekParams);
+
+        // 创建显示日期天数的文本视图
+        TextView dayOfMonthTextView = new TextView(this);
+        dayOfMonthTextView.setText(dayOfMonthFormat.format(date));
+        dayOfMonthTextView.setWidth(getResources().getDimensionPixelSize(R.dimen.date_item_width));
+        dayOfMonthTextView.setHeight(getResources().getDimensionPixelSize(R.dimen.date_item_height));
+        dayOfMonthTextView.setGravity(Gravity.CENTER);
+
+        // 检查是否为当前日期，设置初始状态
+        if (index == 0) {
+            dayOfMonthTextView.setTextColor(Color.parseColor("#CFC8FF"));
+            dayOfMonthTextView.setBackgroundResource(R.drawable.selected_date_background);
+            lastSelectedDayTextView = dayOfMonthTextView;
+        } else {
+            dayOfMonthTextView.setTextColor(Color.parseColor("#CFC8FF"));
+            dayOfMonthTextView.setBackgroundResource(R.drawable.unselected_date_background);
+        }
+
+        // 设置日期天数文本视图的布局参数，水平居中显示，位于星期几文本视图下方
+        RelativeLayout.LayoutParams dayOfMonthParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+        dayOfMonthParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        dayOfMonthParams.addRule(RelativeLayout.BELOW, dayOfWeekTextView.getId());
+        dayOfMonthTextView.setLayoutParams(dayOfMonthParams);
+
+        // 允许日期天数文本视图响应点击事件
+        dayOfMonthTextView.setClickable(true);
+
+        // 设置日期天数文本视图的点击事件监听器
+        // 在日期项点击事件的回调中添加以下代码
+        dayOfMonthTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (lastSelectedDayTextView != null) {
+                    // 取消上一个选中日期的背景和文本颜色
+                    lastSelectedDayTextView.setBackgroundResource(R.drawable.unselected_date_background);
+                    lastSelectedDayTextView.setTextColor(Color.parseColor("#CFC8FF"));
+                }
+
+                // 设置当前选中日期的背景和文本颜色
+                dayOfMonthTextView.setBackgroundResource(R.drawable.selected_date_background);
+                dayOfMonthTextView.setTextColor(Color.parseColor("#CFC8FF"));
+
+                // 更新 lastSelectedDayTextView 为当前选中的日期
+                lastSelectedDayTextView = dayOfMonthTextView;
+                System.out.println("lastSelectedDayTextView:" + lastSelectedDayTextView);
+
+                // 获取选中日期的字符串形式，例如 "2023-07-19"
+                String selectedDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+
+                // 遍历目标列表
+                for (int i = 0; i < targetWithTimeList.size(); i++) {
+                    TargetItem targetItem = targetWithTimeList.get(i);
+                    String deadline = targetItem.getDeadline(); // 获取deadline，例如 "2023-07-19T19:14:00"
+
+                    // 解析deadline中的日期部分和时间部分
+                    String[] deadlineParts = deadline.split("T");
+                    String deadlineDate = deadlineParts[0]; // 日期部分，例如 "2023-07-19"
+                    String deadlineTime = deadlineParts[1].substring(0, 5); // 时间部分，例如 "19:14"
+
+                    // 计算日期差
+                    long dayDifference = calculateDayDifference(selectedDate, deadlineDate);
+
+                    // 根据日期差的规则设置不同的值
+                    if (dayDifference > 0) {
+                        // 相差日期大于0，获得相差的天数
+                        targetItem.setDayDifference(dayDifference + "天");
+                    } else if (dayDifference == 0) {
+                        // 相差日期等于0，获得deadline的小时以及分钟
+                        targetItem.setDayDifference(deadlineTime);
+                    } else {
+                        // 相差日期小于0，获得deadline的月份和日子
+                        targetItem.setDayDifference(deadlineDate.substring(5));
+                    }
+                    System.out.println("deadlineTime:"+targetItem.getDayDifference());
+                    // 通知适配器数据已更改
+                    targetWithTimeAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+        // 将星期几和日期天数文本视图添加到日期项的布局中
+        dateItemLayout.addView(dayOfWeekTextView);
+        dateItemLayout.addView(dayOfMonthTextView);
+
+        // 返回日期项的布局
+        return dateItemLayout;
+    }
+
+    // 计算日期差的方法
+    private long calculateDayDifference(String date1, String date2) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date parsedDate1 = dateFormat.parse(date1);
+            Date parsedDate2 = dateFormat.parse(date2);
+            long timeDifference = parsedDate2.getTime() - parsedDate1.getTime();
+            return TimeUnit.DAYS.convert(timeDifference, TimeUnit.MILLISECONDS);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
 
     private void fetchTargetData() {
         OkHttpClient client = new OkHttpClient();
@@ -138,19 +309,46 @@ public class TargetActivity extends AppCompatActivity {
                                 String deadline = item.getString("deadline");
                                 String targetId=item.getString("targetId");
 
+                                String dayDifferenceString;
+                                dayDifferenceString="任意时间";
+
+
                                 // 创建TargetItem对象并添加到targetList中
-                                targetNoTimeList.add(new TargetItem(targetName, targetDescribe,targetPoint,deadline,targetId));
+                                targetNoTimeList.add(new TargetItem(targetName, targetDescribe,targetPoint,deadline,targetId,dayDifferenceString));
                             }else if(item.getString("status").equals("1")){
                                 String targetName = item.getString("targetName");
                                 String targetDescribe = item.getString("targetDescribe");
                                 String targetPoint = item.getString("targetPoint");
                                 String deadline = item.getString("deadline");
                                 String targetId=item.getString("targetId");
+                                String dayDifferenceString;
+
+                                // 解析deadline中的日期部分和时间部分
+                                String[] deadlineParts = deadline.split("T");
+                                String deadlineDate = deadlineParts[0]; // 日期部分，例如 "2023-07-19"
+                                String deadlineTime = deadlineParts[1].substring(0, 5); // 时间部分，例如 "19:14"
+
+                                // 获取选中日期的字符串形式，例如 "2023-07-19"
+                                String selectedDate = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
+
+                                // 计算日期差
+                                long dayDifference = calculateDayDifference(selectedDate, deadlineDate);
+
+                                // 根据日期差的规则设置不同的值
+                                if (dayDifference > 0) {
+                                    // 相差日期大于0，获得相差的天数
+                                    dayDifferenceString=(dayDifference + "天");
+                                } else if (dayDifference == 0) {
+                                    // 相差日期等于0，获得deadline的小时以及分钟
+                                    dayDifferenceString=deadlineTime;
+                                } else {
+                                    // 相差日期小于0，获得deadline的月份和日子
+                                    dayDifferenceString=deadlineDate.substring(5);
+                                }
 
                                 // 创建TargetItem对象并添加到targetList中
-                                targetWithTimeList.add(new TargetItem(targetName, targetDescribe,targetPoint,deadline,targetId));
+                                targetWithTimeList.add(new TargetItem(targetName, targetDescribe,targetPoint,deadline,targetId,dayDifferenceString));
                             }
-
                         }
 
                         // 更新 UI，确保在主线程中执行
