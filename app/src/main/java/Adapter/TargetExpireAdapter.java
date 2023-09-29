@@ -31,16 +31,16 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapter.ViewHolder>{
+public class TargetExpireAdapter extends RecyclerView.Adapter<TargetExpireAdapter.ViewHolder>{
     private List<TargetItem> targetItemList;
-    private int targetNoTimeVisibilityState1 = View.VISIBLE;
-    private int targetNoTimeVisibilityState2= View.GONE;
+    private int targetExpireVisibilityState1 = View.VISIBLE;
+    private int targetExpireVisibilityState2= View.GONE;
 
-    public TargetNoTimeAdapter(List<TargetItem> targetItemList, int visibilityState1, int visibilityState2) {
+    public TargetExpireAdapter(List<TargetItem> targetItemList, int visibilityState1, int visibilityState2) {
         this.targetItemList = targetItemList;
         // 初始化可见性状态
-        this.targetNoTimeVisibilityState1 = visibilityState1;
-        this.targetNoTimeVisibilityState2 = visibilityState2;
+        this.targetExpireVisibilityState1 = visibilityState1;
+        this.targetExpireVisibilityState2 = visibilityState2;
     }
     @Override
     public int getItemViewType(int position) {
@@ -50,21 +50,20 @@ public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapte
             return 0; // 返回0表示正常数据项
         }
     }
-
     @NonNull
     @Override
-    public TargetNoTimeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TargetExpireAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == 0) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_target_notime, parent, false);
-            return new TargetNoTimeAdapter.ViewHolder(view);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_target_expire, parent, false);
+            return new TargetExpireAdapter.ViewHolder(view);
         } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_target_notime_null, parent, false);
-            return new TargetNoTimeAdapter.ViewHolder(view);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_target_expire_null, parent, false);
+            return new TargetExpireAdapter.ViewHolder(view);
         }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TargetNoTimeAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TargetExpireAdapter.ViewHolder holder, int position) {
         if (targetItemList.size() == 0) {
             // 当数据为空时，可以设置空页面的提示信息或样式
 
@@ -74,22 +73,22 @@ public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapte
             System.out.println(targetItem.getTargetName());
             holder.targetNameTextView.setText(targetItem.getTargetName());
             holder.targetDescriptionTextView.setText(targetItem.getTargetDescribe());
-            holder.targetNoTimePointTextView.setText("X"+targetItem.getTargetPoint());
+            holder.targetExpirePointTextView.setText("X"+targetItem.getTargetPoint());
 
 
             // 设置detailEdit的可见性状态
-            holder.targetNoTimePointCardView.setVisibility(targetNoTimeVisibilityState1);
-            holder.targetNoTimeDayDifference.setVisibility(targetNoTimeVisibilityState1);
+            holder.targetExpirePointCardView.setVisibility(targetExpireVisibilityState1);
+            holder.targetExpireDayDifference.setVisibility(targetExpireVisibilityState1);
             // 设置detailDelete的可见性状态
-            holder.targetNoTimeDelete.setVisibility(targetNoTimeVisibilityState2);
+            holder.targetExpireDelete.setVisibility(targetExpireVisibilityState2);
 
-            holder.targetNoTimeDelete.setOnClickListener(new View.OnClickListener() {
+            holder.targetExpireDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     deleteTarget(targetItem, holder.getAdapterPosition(), holder.itemView.getContext());
                 }
             });
-            holder.targetNoTimePointCardView.setOnClickListener(new View.OnClickListener() {
+            holder.targetExpirePointCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     finishTarget(targetItem, holder.getAdapterPosition(), holder.itemView.getContext());
@@ -97,25 +96,24 @@ public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapte
             });
 
             // 添加渐变动画效果
-            if (targetNoTimeVisibilityState1 == View.VISIBLE) {
-                animateView(holder.targetNoTimePointCardView, true);
-                animateView(holder.targetNoTimeDayDifference, true);
+            if (targetExpireVisibilityState1 == View.VISIBLE) {
+                animateView(holder.targetExpirePointCardView, true);
+                animateView(holder.targetExpireDayDifference, true);
             } else {
-                animateView(holder.targetNoTimePointCardView, false);
-                animateView(holder.targetNoTimeDayDifference, false);
+                animateView(holder.targetExpirePointCardView, false);
+                animateView(holder.targetExpireDayDifference, false);
             }
 
-            if (targetNoTimeVisibilityState2 == View.VISIBLE) {
-                animateView(holder.targetNoTimeDelete, true);
+            if (targetExpireVisibilityState2 == View.VISIBLE) {
+                animateView(holder.targetExpireDelete, true);
             } else {
-                animateView(holder.targetNoTimeDelete, false);
+                animateView(holder.targetExpireDelete, false);
             }
         }
-
     }
     public void updateVisibility(int visibilityState1, int visibilityState2) {
-        targetNoTimeVisibilityState1 = visibilityState1;
-        targetNoTimeVisibilityState2 = visibilityState2;
+        targetExpireVisibilityState1 = visibilityState1;
+        targetExpireVisibilityState2 = visibilityState2;
         notifyDataSetChanged();
     }
 
@@ -261,31 +259,30 @@ public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapte
         }
     }
 
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView targetNameTextView;
         TextView targetDescriptionTextView;
-        TextView targetNoTimePointTextView;
+        TextView targetExpirePointTextView;
 
         // 获取activity_nav.xml中的根布局
         View Nav;
         ImageView navDelete;
 
-        CardView targetNoTimePointCardView;
-        CardView targetNoTimeDelete;
-        TextView targetNoTimeDayDifference;
+        CardView targetExpirePointCardView;
+        CardView targetExpireDelete;
+        TextView targetExpireDayDifference;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            targetNameTextView = itemView.findViewById(R.id.targetNoTimeName);
-            targetDescriptionTextView = itemView.findViewById(R.id.targetNoTimeDescribe);
-            targetNoTimePointTextView = itemView.findViewById(R.id.targetNoTimePoint);
+            targetNameTextView = itemView.findViewById(R.id.targetExpireName);
+            targetDescriptionTextView = itemView.findViewById(R.id.targetExpireDescribe);
+            targetExpirePointTextView = itemView.findViewById(R.id.targetExpirePoint);
 
             Nav = ((Activity) itemView.getContext()).findViewById(R.id.Nav);
             navDelete = Nav.findViewById(R.id.navDelete);
-            targetNoTimePointCardView = itemView.findViewById(R.id.targetNoTimePointCardView);
-            targetNoTimeDelete = itemView.findViewById(R.id.targetNoTimeDelete);
-            targetNoTimeDayDifference = itemView.findViewById(R.id.targetNoTimeDayDifference);
+            targetExpirePointCardView = itemView.findViewById(R.id.targetExpirePointCardView);
+            targetExpireDelete = itemView.findViewById(R.id.targetExpireDelete);
+            targetExpireDayDifference = itemView.findViewById(R.id.targetExpireDayDifference);
         }
     }
 }

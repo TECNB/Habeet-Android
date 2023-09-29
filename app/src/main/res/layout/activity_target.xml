@@ -27,19 +27,30 @@
             </LinearLayout>
         </HorizontalScrollView>
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/targetTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center">
+            <TextView
+                android:id="@+id/DoingBefore"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="进行中"
+                android:textColor="@color/hui"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:visibility="gone"/>
             <androidx.cardview.widget.CardView
-                android:layout_width="90dp"
+                android:id="@+id/DoingAfter"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
+                android:layout_weight="0.8"
                 app:cardElevation="0dp"
                 app:cardCornerRadius="20dp"
                 android:layout_alignParentStart="true"
-                android:id="@+id/targetNavLeft"
                 android:layout_centerVertical="true">
                 <TextView
                     android:layout_width="match_parent"
@@ -52,31 +63,69 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/DoneBefore"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="已完成"
                 android:textColor="@color/hui"
                 android:textSize="18sp"
-                android:layout_toRightOf="@id/targetNavLeft"
-                android:layout_centerVertical="true"
-                android:id="@+id/targetNavLeft2"
-                android:layout_marginLeft="40dp"/>
+                android:gravity="center"/>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/DoneAfter"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="0.8"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="20dp"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="已完成"
+                    android:textColor="@color/white"
+                    android:background="@color/zi"
+                    android:textSize="18sp"
+                    android:gravity="center"/>
+            </androidx.cardview.widget.CardView>
+
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/ExpireBefore"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="已过期"
                 android:textColor="@color/hui"
                 android:textSize="18sp"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/targetNavLeft2"
-                android:layout_marginLeft="40dp"/>
+                android:gravity="center"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/ExpireAfter"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="0.8"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="20dp"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="已过期"
+                    android:textColor="@color/white"
+                    android:background="@color/zi"
+                    android:textSize="18sp"
+                    android:gravity="center"/>
+            </androidx.cardview.widget.CardView>
+
             <ImageView
-                android:layout_width="25dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.2"
                 android:src="@drawable/targetlogo2"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"/>
-        </RelativeLayout>
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"/>
+        </LinearLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -89,7 +138,7 @@
                 android:textColor="@color/hui"
                 android:layout_marginTop="10dp"
                 app:layout_constraintTop_toBottomOf="@id/targetTime"
-                tools:ignore="MissingConstraints,NotSibling" />
+                tools:ignore="MissingConstraints,NotSibling"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/targetNoTimeRecyclerView"
                 android:layout_width="match_parent"
@@ -117,6 +166,46 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/targetCompletedTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已经完成"
+                android:textSize="15sp"
+                android:textColor="@color/hui"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/targetTime"
+                tools:ignore="MissingConstraints,NotSibling"
+                android:visibility="gone"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/targetCompletedRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/targetCompletedTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/targetExpireTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已经过期"
+                android:textSize="15sp"
+                android:textColor="@color/hui"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/targetTime"
+                tools:ignore="MissingConstraints,NotSibling"
+                android:visibility="gone"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/targetExpireRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/targetExpireTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"/>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="70dp"

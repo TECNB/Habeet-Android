@@ -42,60 +42,76 @@ public class TargetWithTimeAdapter extends RecyclerView.Adapter<TargetWithTimeAd
         // 初始化可见性状态
         this.targetWithTimeVisibilityState1 = visibilityState1;
         this.targetWithTimeVisibilityState2 = visibilityState2;
-
     }
-
+    @Override
+    public int getItemViewType(int position) {
+        if (targetItemList.size() == 0) {
+            return 1; // 返回1表示空页面
+        } else {
+            return 0; // 返回0表示正常数据项
+        }
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_target_withtime, parent, false);
-        return new ViewHolder(view);
+        if (viewType == 0) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_target_withtime, parent, false);
+            return new TargetWithTimeAdapter.ViewHolder(view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_target_withtime_null, parent, false);
+            return new TargetWithTimeAdapter.ViewHolder(view);
+        }
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        TargetItem targetItem = targetItemList.get(position);
-        System.out.println(targetItem.getTargetName());
-        holder.targetNameTextView.setText(targetItem.getTargetName());
-        holder.targetDescriptionTextView.setText(targetItem.getTargetDescribe());
-        holder.targetWithTimePointTextView.setText("X"+targetItem.getTargetPoint());
-        holder.targetWithTimeDayDifference.setText(targetItem.getDayDifference());
+        if (targetItemList.size() == 0) {
+            // 当数据为空时，可以设置空页面的提示信息或样式
 
-
-
-        // 设置detailEdit的可见性状态
-        holder.targetWithTimePointCardView.setVisibility(targetWithTimeVisibilityState1);
-        holder.targetWithTimeDayDifference.setVisibility(targetWithTimeVisibilityState1);
-        // 设置detailDelete的可见性状态
-        holder.targetWithTimeDelete.setVisibility(targetWithTimeVisibilityState2);
-
-        holder.targetWithTimeDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteTarget(targetItem, holder.getAdapterPosition(), holder.itemView.getContext());
-            }
-        });
-        holder.targetWithTimePointCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteTarget(targetItem, holder.getAdapterPosition(), holder.itemView.getContext());
-            }
-        });
-
-        // 添加渐变动画效果
-        if (targetWithTimeVisibilityState1 == View.VISIBLE) {
-            animateView(holder.targetWithTimePointCardView, true);
-            animateView(holder.targetWithTimeDayDifference, true);
+            // 可以设置其他空页面的样式或操作
         } else {
-            animateView(holder.targetWithTimePointCardView, false);
-            animateView(holder.targetWithTimeDayDifference, false);
+            TargetItem targetItem = targetItemList.get(position);
+            System.out.println(targetItem.getTargetName());
+            holder.targetNameTextView.setText(targetItem.getTargetName());
+            holder.targetDescriptionTextView.setText(targetItem.getTargetDescribe());
+            holder.targetWithTimePointTextView.setText("X"+targetItem.getTargetPoint());
+            holder.targetWithTimeDayDifference.setText(targetItem.getDayDifference());
+
+            // 设置detailEdit的可见性状态
+            holder.targetWithTimePointCardView.setVisibility(targetWithTimeVisibilityState1);
+            holder.targetWithTimeDayDifference.setVisibility(targetWithTimeVisibilityState1);
+            // 设置detailDelete的可见性状态
+            holder.targetWithTimeDelete.setVisibility(targetWithTimeVisibilityState2);
+
+            holder.targetWithTimeDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    deleteTarget(targetItem, holder.getAdapterPosition(), holder.itemView.getContext());
+                }
+            });
+            holder.targetWithTimePointCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    deleteTarget(targetItem, holder.getAdapterPosition(), holder.itemView.getContext());
+                }
+            });
+
+            // 添加渐变动画效果
+            if (targetWithTimeVisibilityState1 == View.VISIBLE) {
+                animateView(holder.targetWithTimePointCardView, true);
+                animateView(holder.targetWithTimeDayDifference, true);
+            } else {
+                animateView(holder.targetWithTimePointCardView, false);
+                animateView(holder.targetWithTimeDayDifference, false);
+            }
+
+            if (targetWithTimeVisibilityState2 == View.VISIBLE) {
+                animateView(holder.targetWithTimeDelete, true);
+            } else {
+                animateView(holder.targetWithTimeDelete, false);
+            }
         }
 
-        if (targetWithTimeVisibilityState2 == View.VISIBLE) {
-            animateView(holder.targetWithTimeDelete, true);
-        } else {
-            animateView(holder.targetWithTimeDelete, false);
-        }
     }
 
     public void updateVisibility(int visibilityState1, int visibilityState2) {
@@ -238,7 +254,11 @@ public class TargetWithTimeAdapter extends RecyclerView.Adapter<TargetWithTimeAd
 
     @Override
     public int getItemCount() {
-        return targetItemList.size();
+        if (targetItemList.size() == 0) {
+            return 1; // 返回1项以显示空页面
+        } else {
+            return targetItemList.size();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

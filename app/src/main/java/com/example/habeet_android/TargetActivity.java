@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +28,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import Adapter.TargetCompletedAdapter;
+import Adapter.TargetExpireAdapter;
 import Adapter.TargetNoTimeAdapter;
 import Adapter.TargetWithTimeAdapter;
 import Item.TargetItem;
@@ -42,14 +45,26 @@ import okhttp3.Response;
 public class TargetActivity extends AppCompatActivity {
     private RecyclerView targetWithTimeRecyclerView;
     private RecyclerView targetNoTimeRecyclerView;
+    private RecyclerView targetCompletedRecyclerView;
+    private RecyclerView targetExpireRecyclerView;
+
+    private TextView targetWithTimeTextView;
+    private TextView targetNoTimeTextView;
+    private TextView targetCompletedTextView;
+    private TextView targetExpireTextView;
+
     private TargetWithTimeAdapter targetWithTimeAdapter;
     private TargetNoTimeAdapter targetNoTimeAdapter;
+    private TargetCompletedAdapter targetCompletedAdapter;
+    private TargetExpireAdapter targetExpireAdapter;
+
     private List<TargetItem> targetWithTimeList;
     private List<TargetItem> targetNoTimeList;
+    private List<TargetItem> targetCompletedList;
+    private List<TargetItem> targetExpireList;
 
     private int targetVisibilityState1 = View.VISIBLE;
     private int targetVisibilityState2 = View.GONE;
-
 
     private View Nav;
     ImageView navDelete;
@@ -58,12 +73,17 @@ public class TargetActivity extends AppCompatActivity {
     private Calendar calendar = Calendar.getInstance();
     private TextView lastSelectedDayTextView = null;
 
+    private TextView DoingBefore;
+    private TextView DoneBefore;
+    private TextView ExpireBefore;
+    private CardView DoingAfter;
+    private CardView DoneAfter;
+    private CardView ExpireAfter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_target);
-
-
 
         DrawerMenuHelper drawerMenuHelper = new DrawerMenuHelper(this);
         drawerMenuHelper.setupDrawerMenu(1);
@@ -82,19 +102,103 @@ public class TargetActivity extends AppCompatActivity {
                 // 更新两个适配器的可见性状态
                 targetNoTimeAdapter.updateVisibility(targetVisibilityState1, targetVisibilityState2);
                 targetWithTimeAdapter.updateVisibility(targetVisibilityState1, targetVisibilityState2);
+                targetCompletedAdapter.updateVisibility(targetVisibilityState1, targetVisibilityState2);
+                targetExpireAdapter.updateVisibility(targetVisibilityState1, targetVisibilityState2);
             }
         });
-
 
         // 初始化RecyclerView
         targetWithTimeRecyclerView = findViewById(R.id.targetWithTimeRecyclerView);
         targetNoTimeRecyclerView = findViewById(R.id.targetNoTimeRecyclerView);
+        targetCompletedRecyclerView = findViewById(R.id.targetCompletedRecyclerView);
+        targetExpireRecyclerView = findViewById(R.id.targetExpireRecyclerView);
+
         targetWithTimeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         targetNoTimeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        targetCompletedRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        targetExpireRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        DoingBefore= findViewById(R.id.DoingBefore);
+        DoneBefore= findViewById(R.id.DoneBefore);
+        ExpireBefore= findViewById(R.id.ExpireBefore);
+        DoingAfter= findViewById(R.id.DoingAfter);
+        DoneAfter= findViewById(R.id.DoneAfter);
+        ExpireAfter= findViewById(R.id.ExpireAfter);
+
+        targetWithTimeTextView= findViewById(R.id.targetWithTimeTextView);
+        targetNoTimeTextView= findViewById(R.id.targetNoTimeTextView);
+        targetCompletedTextView= findViewById(R.id.targetCompletedTextView);
+        targetExpireTextView= findViewById(R.id.targetExpireTextView);
+
+        DoingBefore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DoneAfter.setVisibility(View.GONE);
+                DoingAfter.setVisibility(View.VISIBLE);
+                ExpireAfter.setVisibility(View.GONE);
+                DoingBefore.setVisibility(View.GONE);
+                DoneBefore.setVisibility(View.VISIBLE);
+                ExpireBefore.setVisibility(View.VISIBLE);
+
+                targetWithTimeTextView.setVisibility(View.VISIBLE);
+                targetNoTimeTextView.setVisibility(View.VISIBLE);
+                targetWithTimeRecyclerView.setVisibility(View.VISIBLE);
+                targetNoTimeRecyclerView.setVisibility(View.VISIBLE);
+
+                targetCompletedTextView.setVisibility(View.GONE);
+                targetExpireTextView.setVisibility(View.GONE);
+                targetExpireRecyclerView.setVisibility(View.GONE);
+                targetCompletedRecyclerView.setVisibility(View.GONE);
+            }
+        });
+        DoneBefore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DoneAfter.setVisibility(View.VISIBLE);
+                DoingAfter.setVisibility(View.GONE);
+                ExpireAfter.setVisibility(View.GONE);
+                DoingBefore.setVisibility(View.VISIBLE);
+                DoneBefore.setVisibility(View.GONE);
+                ExpireBefore.setVisibility(View.VISIBLE);
+
+                targetWithTimeTextView.setVisibility(View.GONE);
+                targetNoTimeTextView.setVisibility(View.GONE);
+                targetWithTimeRecyclerView.setVisibility(View.GONE);
+                targetNoTimeRecyclerView.setVisibility(View.GONE);
+
+                targetCompletedTextView.setVisibility(View.VISIBLE);
+                targetExpireTextView.setVisibility(View.GONE);
+                targetExpireRecyclerView.setVisibility(View.GONE);
+                targetCompletedRecyclerView.setVisibility(View.VISIBLE);
+            }
+        });
+        ExpireBefore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DoneAfter.setVisibility(View.GONE);
+                DoingAfter.setVisibility(View.GONE);
+                ExpireAfter.setVisibility(View.VISIBLE);
+                DoingBefore.setVisibility(View.VISIBLE);
+                DoneBefore.setVisibility(View.VISIBLE);
+                ExpireBefore.setVisibility(View.GONE);
+
+                targetWithTimeTextView.setVisibility(View.GONE);
+                targetNoTimeTextView.setVisibility(View.GONE);
+                targetWithTimeRecyclerView.setVisibility(View.GONE);
+                targetNoTimeRecyclerView.setVisibility(View.GONE);
+
+                targetCompletedTextView.setVisibility(View.GONE);
+                targetExpireTextView.setVisibility(View.VISIBLE);
+                targetExpireRecyclerView.setVisibility(View.VISIBLE);
+                targetCompletedRecyclerView.setVisibility(View.GONE);
+            }
+        });
 
         // 初始化数据列表
         targetWithTimeList = new ArrayList<>(); // 初始化 targetWithTimeList
         targetNoTimeList = new ArrayList<>(); // 初始化 targetNoTimeList
+        targetCompletedList = new ArrayList<>(); // 初始化 targetNoTimeList
+        targetExpireList = new ArrayList<>(); // 初始化 targetNoTimeList
 
         dateSelectorLayout = findViewById(R.id.dateSelectorLayout);
 
@@ -106,9 +210,13 @@ public class TargetActivity extends AppCompatActivity {
         // 初始化适配器并将其与RecyclerView关联
         targetWithTimeAdapter = new TargetWithTimeAdapter(targetWithTimeList,targetVisibilityState1, targetVisibilityState2);
         targetNoTimeAdapter = new TargetNoTimeAdapter(targetNoTimeList,targetVisibilityState1, targetVisibilityState2);
+        targetCompletedAdapter = new TargetCompletedAdapter(targetCompletedList,targetVisibilityState1, targetVisibilityState2);
+        targetExpireAdapter = new TargetExpireAdapter(targetExpireList,targetVisibilityState1, targetVisibilityState2);
 
         targetWithTimeRecyclerView.setAdapter(targetWithTimeAdapter);
         targetNoTimeRecyclerView.setAdapter(targetNoTimeAdapter);
+        targetCompletedRecyclerView.setAdapter(targetCompletedAdapter);
+        targetExpireRecyclerView.setAdapter(targetExpireAdapter);
 
 
 
@@ -348,6 +456,32 @@ public class TargetActivity extends AppCompatActivity {
 
                                 // 创建TargetItem对象并添加到targetList中
                                 targetWithTimeList.add(new TargetItem(targetName, targetDescribe,targetPoint,deadline,targetId,dayDifferenceString));
+                            }else if(item.getString("status").equals("2")){
+                                String targetName = item.getString("targetName");
+                                String targetDescribe = item.getString("targetDescribe");
+                                String targetPoint = item.getString("targetPoint");
+                                String deadline = item.getString("deadline");
+                                String targetId=item.getString("targetId");
+
+                                String dayDifferenceString;
+                                dayDifferenceString="完成";
+
+
+                                // 创建TargetItem对象并添加到targetList中
+                                targetCompletedList.add(new TargetItem(targetName, targetDescribe,targetPoint,deadline,targetId,dayDifferenceString));
+                            }else if(item.getString("status").equals("3")){
+                                String targetName = item.getString("targetName");
+                                String targetDescribe = item.getString("targetDescribe");
+                                String targetPoint = item.getString("targetPoint");
+                                String deadline = item.getString("deadline");
+                                String targetId=item.getString("targetId");
+
+                                String dayDifferenceString;
+                                dayDifferenceString="过期";
+
+
+                                // 创建TargetItem对象并添加到targetList中
+                                targetExpireList.add(new TargetItem(targetName, targetDescribe,targetPoint,deadline,targetId,dayDifferenceString));
                             }
                         }
 

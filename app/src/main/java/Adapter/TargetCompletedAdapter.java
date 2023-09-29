@@ -31,16 +31,16 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapter.ViewHolder>{
+public class TargetCompletedAdapter extends RecyclerView.Adapter<TargetCompletedAdapter.ViewHolder>{
     private List<TargetItem> targetItemList;
-    private int targetNoTimeVisibilityState1 = View.VISIBLE;
-    private int targetNoTimeVisibilityState2= View.GONE;
+    private int targetCompletedVisibilityState1 = View.VISIBLE;
+    private int targetCompletedVisibilityState2= View.GONE;
 
-    public TargetNoTimeAdapter(List<TargetItem> targetItemList, int visibilityState1, int visibilityState2) {
+    public TargetCompletedAdapter(List<TargetItem> targetItemList, int visibilityState1, int visibilityState2) {
         this.targetItemList = targetItemList;
         // 初始化可见性状态
-        this.targetNoTimeVisibilityState1 = visibilityState1;
-        this.targetNoTimeVisibilityState2 = visibilityState2;
+        this.targetCompletedVisibilityState1 = visibilityState1;
+        this.targetCompletedVisibilityState2 = visibilityState2;
     }
     @Override
     public int getItemViewType(int position) {
@@ -50,21 +50,20 @@ public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapte
             return 0; // 返回0表示正常数据项
         }
     }
-
     @NonNull
     @Override
-    public TargetNoTimeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TargetCompletedAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == 0) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_target_notime, parent, false);
-            return new TargetNoTimeAdapter.ViewHolder(view);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_target_completed, parent, false);
+            return new TargetCompletedAdapter.ViewHolder(view);
         } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_target_notime_null, parent, false);
-            return new TargetNoTimeAdapter.ViewHolder(view);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_target_completed_null, parent, false);
+            return new TargetCompletedAdapter.ViewHolder(view);
         }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TargetNoTimeAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TargetCompletedAdapter.ViewHolder holder, int position) {
         if (targetItemList.size() == 0) {
             // 当数据为空时，可以设置空页面的提示信息或样式
 
@@ -74,22 +73,22 @@ public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapte
             System.out.println(targetItem.getTargetName());
             holder.targetNameTextView.setText(targetItem.getTargetName());
             holder.targetDescriptionTextView.setText(targetItem.getTargetDescribe());
-            holder.targetNoTimePointTextView.setText("X"+targetItem.getTargetPoint());
+            holder.targetCompletedPointTextView.setText("X"+targetItem.getTargetPoint());
 
 
             // 设置detailEdit的可见性状态
-            holder.targetNoTimePointCardView.setVisibility(targetNoTimeVisibilityState1);
-            holder.targetNoTimeDayDifference.setVisibility(targetNoTimeVisibilityState1);
+            holder.targetCompletedPointCardView.setVisibility(targetCompletedVisibilityState1);
+            holder.targetCompletedDayDifference.setVisibility(targetCompletedVisibilityState1);
             // 设置detailDelete的可见性状态
-            holder.targetNoTimeDelete.setVisibility(targetNoTimeVisibilityState2);
+            holder.targetCompletedDelete.setVisibility(targetCompletedVisibilityState2);
 
-            holder.targetNoTimeDelete.setOnClickListener(new View.OnClickListener() {
+            holder.targetCompletedDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     deleteTarget(targetItem, holder.getAdapterPosition(), holder.itemView.getContext());
                 }
             });
-            holder.targetNoTimePointCardView.setOnClickListener(new View.OnClickListener() {
+            holder.targetCompletedPointCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     finishTarget(targetItem, holder.getAdapterPosition(), holder.itemView.getContext());
@@ -97,25 +96,24 @@ public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapte
             });
 
             // 添加渐变动画效果
-            if (targetNoTimeVisibilityState1 == View.VISIBLE) {
-                animateView(holder.targetNoTimePointCardView, true);
-                animateView(holder.targetNoTimeDayDifference, true);
+            if (targetCompletedVisibilityState1 == View.VISIBLE) {
+                animateView(holder.targetCompletedPointCardView, true);
+                animateView(holder.targetCompletedDayDifference, true);
             } else {
-                animateView(holder.targetNoTimePointCardView, false);
-                animateView(holder.targetNoTimeDayDifference, false);
+                animateView(holder.targetCompletedPointCardView, false);
+                animateView(holder.targetCompletedDayDifference, false);
             }
 
-            if (targetNoTimeVisibilityState2 == View.VISIBLE) {
-                animateView(holder.targetNoTimeDelete, true);
+            if (targetCompletedVisibilityState2 == View.VISIBLE) {
+                animateView(holder.targetCompletedDelete, true);
             } else {
-                animateView(holder.targetNoTimeDelete, false);
+                animateView(holder.targetCompletedDelete, false);
             }
         }
-
     }
     public void updateVisibility(int visibilityState1, int visibilityState2) {
-        targetNoTimeVisibilityState1 = visibilityState1;
-        targetNoTimeVisibilityState2 = visibilityState2;
+        targetCompletedVisibilityState1 = visibilityState1;
+        targetCompletedVisibilityState2 = visibilityState2;
         notifyDataSetChanged();
     }
 
@@ -261,31 +259,30 @@ public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapte
         }
     }
 
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView targetNameTextView;
         TextView targetDescriptionTextView;
-        TextView targetNoTimePointTextView;
+        TextView targetCompletedPointTextView;
 
         // 获取activity_nav.xml中的根布局
         View Nav;
         ImageView navDelete;
 
-        CardView targetNoTimePointCardView;
-        CardView targetNoTimeDelete;
-        TextView targetNoTimeDayDifference;
+        CardView targetCompletedPointCardView;
+        CardView targetCompletedDelete;
+        TextView targetCompletedDayDifference;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            targetNameTextView = itemView.findViewById(R.id.targetNoTimeName);
-            targetDescriptionTextView = itemView.findViewById(R.id.targetNoTimeDescribe);
-            targetNoTimePointTextView = itemView.findViewById(R.id.targetNoTimePoint);
+            targetNameTextView = itemView.findViewById(R.id.targetCompletedName);
+            targetDescriptionTextView = itemView.findViewById(R.id.targetCompletedDescribe);
+            targetCompletedPointTextView = itemView.findViewById(R.id.targetCompletedPoint);
 
             Nav = ((Activity) itemView.getContext()).findViewById(R.id.Nav);
             navDelete = Nav.findViewById(R.id.navDelete);
-            targetNoTimePointCardView = itemView.findViewById(R.id.targetNoTimePointCardView);
-            targetNoTimeDelete = itemView.findViewById(R.id.targetNoTimeDelete);
-            targetNoTimeDayDifference = itemView.findViewById(R.id.targetNoTimeDayDifference);
+            targetCompletedPointCardView = itemView.findViewById(R.id.targetCompletedPointCardView);
+            targetCompletedDelete = itemView.findViewById(R.id.targetCompletedDelete);
+            targetCompletedDayDifference = itemView.findViewById(R.id.targetCompletedDayDifference);
         }
     }
 }
