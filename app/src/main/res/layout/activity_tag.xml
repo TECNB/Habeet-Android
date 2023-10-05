@@ -23,7 +23,7 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/TagCardView"
+            android:id="@+id/tagCardView"
             android:layout_width="70dp"
             android:layout_height="70dp"
             app:cardCornerRadius="40dp"

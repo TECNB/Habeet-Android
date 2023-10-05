@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.HabeetAndroid" parent="Base.Theme.HabeetAndroid" />
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@color/danDanZi</item> <!-- 设置背景颜色 -->
+        <item name="android:textColorPrimary">@color/white</item> <!-- 设置文本颜色 -->
+        <item name="colorAccent">@color/zi</item> <!-- 设置按钮颜色 -->
+    </style>
 </resources>

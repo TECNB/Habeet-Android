@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreatActivity">
+    tools:context=".CreateActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,21 +14,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:id="@+id/createX"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/creatx"
-                android:id="@+id/creatNavLeft"
+                android:src="@drawable/createx"
                 android:layout_centerVertical="true"/>
             <TextView
+                android:id="@+id/createNavTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="建立目标"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                android:layout_toRightOf="@id/creatNavLeft"
+                android:layout_toRightOf="@id/createX"
                 android:layout_marginLeft="20dp"
                 android:layout_centerVertical="true"/>
             <TextView
+                android:id="@+id/Save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="保存"
@@ -41,7 +43,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="150dp"
-            android:src="@drawable/creatlogo"
+            android:src="@drawable/createlogo"
             android:layout_marginTop="10dp"/>
 
         <TextView
@@ -69,13 +71,17 @@
                 tools:layout_editor_absoluteY="1dp"
                 tools:ignore="MissingConstraints"
                 android:background="@color/danHui">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="请输入名称"
+                <EditText
+                    android:id="@+id/Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="请输入名称"
+                    android:maxLength="6"
                     android:textStyle="bold"
-                    android:textColor="@color/hui"
+                    android:textColorHint="@color/hui"
+                    android:textColor="@color/black"
                     android:textSize="15sp"
+                    android:background="@null"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp" />
             </RelativeLayout>
@@ -106,13 +112,17 @@
                 tools:layout_editor_absoluteY="1dp"
                 tools:ignore="MissingConstraints"
                 android:background="@color/danHui">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="请输入备注"
+                <EditText
+                    android:id="@+id/Describe"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="请输入备注"
+                    android:maxLength="6"
                     android:textStyle="bold"
-                    android:textColor="@color/hui"
+                    android:textColorHint="@color/hui"
+                    android:textColor="@color/black"
                     android:textSize="15sp"
+                    android:background="@null"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"/>
             </RelativeLayout>
@@ -170,12 +180,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp">
             <LinearLayout
+                android:id="@+id/Calendar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:gravity="center">
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/timerNav1right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="50dp">
@@ -199,12 +209,12 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/Point"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:gravity="center">
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/timerNav2right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="50dp">
@@ -242,13 +252,27 @@
                     android:layout_height="match_parent"
                     android:background="@color/zi"/>
             </androidx.cardview.widget.CardView>
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="截止时间:"
-                android:gravity="center"
-                android:textSize="16sp"
-                android:layout_marginLeft="6dp"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="截止时间:"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="6dp"/>
+                <TextView
+                    android:id="@+id/deadlineTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="16sp"
+                    android:layout_marginLeft="6dp"/>
+
+            </LinearLayout>
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -265,14 +289,25 @@
                     android:layout_height="match_parent"
                     android:background="@color/zi"/>
             </androidx.cardview.widget.CardView>
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="可得分数:"
-                android:gravity="center"
-                android:textSize="16sp"
-                android:layout_marginLeft="6dp"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="可得分数:"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="6dp"/>
+                <TextView
+                    android:id="@+id/scoreTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="16sp"
+                    android:layout_marginLeft="6dp"/>
+            </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

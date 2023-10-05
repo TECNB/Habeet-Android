@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -176,6 +177,7 @@ public class TargetWithTimeAdapter extends RecyclerView.Adapter<TargetWithTimeAd
                         @Override
                         public void run() {
                             notifyItemRangeChanged(position, targetItemList.size());
+                            Toast.makeText(context.getApplicationContext(), "删除目标成功", Toast.LENGTH_SHORT).show();
                         }
                     });
                 } else {

@@ -35,9 +35,15 @@
             android:exported="false" />
         <activity
             android:name=".LoginNavActivity"
-            android:exported="false" />
+            android:exported="true"> <!-- 注意此处的 android:exported 值为 true -->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+
         <activity
-            android:name=".CreatActivity"
+            android:name=".CreateActivity"
             android:exported="false" />
         <activity
             android:name=".HelperActivity"
@@ -65,7 +71,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

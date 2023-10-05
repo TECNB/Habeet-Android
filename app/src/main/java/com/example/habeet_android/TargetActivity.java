@@ -1,5 +1,6 @@
 package com.example.habeet_android;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -219,9 +220,22 @@ public class TargetActivity extends AppCompatActivity {
         targetExpireRecyclerView.setAdapter(targetExpireAdapter);
 
 
-
+        CardView targetCardView=findViewById(R.id.targetCardView);
+        targetCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //监听按钮，如果点击，就跳转
+                startActivity(CreateActivity.class);
+            }
+        });
         // 启动异步任务来执行网络请求
         fetchTargetData();
+    }
+    private void startActivity(Class<?> cls) {
+        Intent intent = new Intent(this, cls);
+        intent.putExtra("sourceActivity","Target");
+        this.startActivity(intent);
+        this.finish(); // 关闭当前活动
     }
 
 

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -132,6 +133,7 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
                         @Override
                         public void run() {
                             notifyItemRemoved(position);
+                            Toast.makeText(context.getApplicationContext(), "删除标签成功", Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -148,19 +150,16 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
                     Log.e("TagActivity", response.body().string());
                 }
             }
-
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
             }
         });
     }
-
     @Override
     public int getItemCount() {
         return tagItemList.size();
     }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tagNameTextView;
         TextView tagDescriptionTextView;
@@ -168,10 +167,8 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
         // 获取activity_nav.xml中的根布局
         View Nav;
         ImageView navDelete;
-
         CardView detailEdit;
         CardView detailDelete;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tagNameTextView = itemView.findViewById(R.id.tagName);

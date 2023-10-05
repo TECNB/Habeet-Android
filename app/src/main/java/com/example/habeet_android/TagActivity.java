@@ -43,13 +43,12 @@ public class TagActivity extends AppCompatActivity {
         drawerMenuHelper.setupDrawerMenu(2);
         drawerMenuHelper.getUserData();
 
-        CardView cardView=findViewById(R.id.TagCardView);
-        cardView.setOnClickListener(new View.OnClickListener() {
+        CardView tagCardView=findViewById(R.id.tagCardView);
+        tagCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //监听按钮，如果点击，就跳转
-                startActivity(CreatActivity.class);
-                Log.v("drawerMenu","点击抽屉的第一个按钮");
+                startActivity(CreateActivity.class);
             }
         });
 
@@ -71,6 +70,7 @@ public class TagActivity extends AppCompatActivity {
 
     private void startActivity(Class<?> cls) {
         Intent intent = new Intent(this, cls);
+        intent.putExtra("sourceActivity","Tag");
         this.startActivity(intent);
         this.finish(); // 关闭当前活动
     }

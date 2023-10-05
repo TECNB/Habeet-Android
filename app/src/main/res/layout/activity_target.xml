@@ -208,6 +208,7 @@
                 android:visibility="gone"/>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/targetCardView"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 app:cardCornerRadius="40dp"
