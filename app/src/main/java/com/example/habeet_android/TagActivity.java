@@ -1,5 +1,7 @@
 package com.example.habeet_android;
 
+import static com.example.habeet_android.HomeActivity.userEmail;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -81,7 +83,7 @@ public class TagActivity extends AppCompatActivity {
         // 请求URL
         String url = "https://tengenchang.top/tag/get";
         // 请求数据
-        String requestData = "3489044730@qq.com";
+        String requestData = userEmail;
         // 设置请求体
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(JSON, requestData);
@@ -111,9 +113,14 @@ public class TagActivity extends AppCompatActivity {
                             JSONObject item = data.getJSONObject(i);
                             String tagName = item.getString("tagName");
                             String tagDescribe = item.getString("tagDescribe");
+                            String tagPoint = item.getString("tagPoint");
+                            String tagHour = item.getString("tagHour");
+                            String tagMinute = item.getString("tagMinute");
 
-                            // 创建TagItem对象并添加到tagList中
-                            tagList.add(new TagItem(tagName, tagDescribe));
+                            if(!"null".equals(tagName)){
+                                // 创建TagItem对象并添加到tagList中
+                                tagList.add(new TagItem(tagName, tagDescribe,tagPoint,tagHour,tagMinute));
+                            }
                         }
 
                         // 更新 UI，确保在主线程中执行

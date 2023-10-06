@@ -1,5 +1,7 @@
 package com.example.habeet_android;
 
+import static com.example.habeet_android.HomeActivity.userEmail;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -142,7 +144,7 @@ public class CreateActivity extends AppCompatActivity {
         // 创建JSON对象
         JSONObject requestData = new JSONObject();
         try {
-            requestData.put("userEmail", "3489044730@qq.com");
+            requestData.put("userEmail", userEmail);
             requestData.put("tagName", Name);
             requestData.put("tagDescribe", Describe);
             requestData.put("tagPoint", Point);
@@ -217,7 +219,7 @@ public class CreateActivity extends AppCompatActivity {
         // 创建JSON对象
         JSONObject requestData = new JSONObject();
         try {
-            requestData.put("userEmail", "3489044730@qq.com");
+            requestData.put("userEmail", userEmail);
             requestData.put("storeName", Name);
             requestData.put("storeDescribe", Describe);
             requestData.put("storePoint", Point);
@@ -291,7 +293,7 @@ public class CreateActivity extends AppCompatActivity {
         // 创建JSON对象
         JSONObject requestData = new JSONObject();
         try {
-            requestData.put("userEmail", "3489044730@qq.com");
+            requestData.put("userEmail", userEmail);
             requestData.put("targetName", Name);
             requestData.put("targetDescribe", Describe);
             requestData.put("targetPoint", Point);
@@ -433,7 +435,7 @@ public class CreateActivity extends AppCompatActivity {
         hourPicker.setDisplayedValues(hours);
 
         // 设置分钟的数据源
-        final String[] minutes = new String[]{"0", "10", "20", "30", "40", "50"};
+        final String[] minutes = new String[]{"10", "20", "30", "40", "50"};
         minutePicker.setMinValue(0);
         minutePicker.setMaxValue(minutes.length - 1);
         minutePicker.setDisplayedValues(minutes);
@@ -461,8 +463,8 @@ public class CreateActivity extends AppCompatActivity {
                 // 在点击确定后获取选择的小时和分钟值并更新UI
                 String selectedHour = hours[hourPicker.getValue()];
                 String selectedMinute = minutes[minutePicker.getValue()];
-                timeMinute=minutePicker.getValue()+1;
-                timeHour=minutePicker.getValue()+1;
+                timeMinute=(minutePicker.getValue()+1)*10;
+                timeHour=hourPicker.getValue()*10;
 
                 String selectedTime = selectedHour + "小时" + selectedMinute + "分钟";
                 deadlineTextView.setText(selectedTime);

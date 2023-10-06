@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Habeet-Android</string>
+    <string name="app_name">Habeet</string>
     <string name="userName"></string>
     <string name="userPont"></string>
 </resources>

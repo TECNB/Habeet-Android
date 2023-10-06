@@ -6,103 +6,158 @@
     android:layout_height="match_parent"
     tools:context=".UserActivity"
     android:id="@+id/drawerLayout">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="15dp">
         <include android:id="@+id/Nav" layout="@layout/activity_nav"/>
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="20dp"
-            app:cardElevation="0dp"
-            app:cardCornerRadius="20dp">
-
-            <RelativeLayout
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/userNav1"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:orientation="horizontal"
-                tools:layout_editor_absoluteX="1dp"
-                tools:layout_editor_absoluteY="1dp"
-                tools:ignore="MissingConstraints"
-                android:background="@color/danHui">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="过去一周"
-                    android:textColor="@color/hui"
-                    android:textSize="15sp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"/>
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="20dp"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="20dp">
 
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/arrowdown"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"/>
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="20dp"
-            app:cardElevation="0dp"
-            app:cardCornerRadius="20dp">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="130dp"
-                android:background="@drawable/gradient_background_blue">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="30dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    tools:layout_editor_absoluteX="1dp"
+                    tools:layout_editor_absoluteY="1dp"
+                    tools:ignore="MissingConstraints"
+                    android:background="@color/danHui">
                     <TextView
+                        android:id="@+id/userTime1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="获得分数"
-                        android:textColor="@color/zi"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
+                        android:text="过去一周"
+                        android:textColor="@color/hui"
+                        android:textSize="15sp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"/>
+
+                    <ImageView
+                        android:id="@+id/userArrowDown"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="25dp"
+                        android:src="@drawable/arrowdown"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"/>
+                    <ImageView
+                        android:id="@+id/userArrowUp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="25dp"
+                        android:src="@drawable/arrowup"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:visibility="gone"/>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/userLogo1"
+                android:layout_below="@+id/userNav1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="20dp"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="20dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:background="@drawable/gradient_background_blue">
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center">
+                        android:orientation="vertical"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="30dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
-                            android:textSize="40sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/zi"/>
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:src="@drawable/coin"
-                            android:layout_marginLeft="20dp"/>
-                    </LinearLayout>
+                            android:text="获得分数"
+                            android:textColor="@color/zi"
+                            android:textSize="20sp"
+                            android:textStyle="bold"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center">
+                            <TextView
+                                android:id="@+id/userPointTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textSize="40sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/zi"/>
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:src="@drawable/coin"
+                                android:layout_marginLeft="20dp"/>
+                        </LinearLayout>
 
+                        <TextView
+                            android:id="@+id/userLogo1TextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="努力的一周!"
+                            android:textSize="18sp"/>
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/userlogo1"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/userNav2"
+                android:layout_below="@id/userNav1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                android:visibility="gone">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="15dp"
+                    android:orientation="vertical">
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/userTime2"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="努力的一周!"
-                        android:textSize="18sp"/>
+                        android:textColor="@color/hui"
+                        android:text="过去一天" />
+                    <TextView
+                        android:id="@+id/userTime3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/hui"
+                        android:layout_marginTop="20dp"
+                        android:text="过去一月" />
                 </LinearLayout>
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/userlogo1"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"/>
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+
 
         <!--下面是第二个用户信息-->
         <androidx.cardview.widget.CardView
@@ -115,7 +170,7 @@
             app:cardCornerRadius="20dp">
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
+                android:layout_height="110dp"
                 android:background="@color/danZi">
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -124,6 +179,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="30dp">
                     <TextView
+                        android:id="@+id/ifProgressTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="进步"
@@ -135,6 +191,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center">
                         <TextView
+                            android:id="@+id/userProgressTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
@@ -152,6 +209,7 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/userLogo2TextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="比起上一周"
@@ -174,7 +232,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <androidx.cardview.widget.CardView
-                    android:layout_width="180dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:layout_marginStart="10dp"
@@ -192,6 +250,7 @@
                         tools:ignore="MissingConstraints"
                         android:background="@color/danHui">
                         <TextView
+                            android:id="@+id/pointInsistenceTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0天\n连续得分"
@@ -218,7 +277,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="180dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="2"
                     android:layout_marginStart="10dp"
@@ -240,6 +299,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
                             <TextView
+                                android:id="@+id/completeTargetRateTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0.0"
@@ -280,7 +340,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <androidx.cardview.widget.CardView
-                    android:layout_width="180dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="2"
                     android:layout_marginStart="10dp"
@@ -302,6 +362,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
                             <TextView
+                                android:id="@+id/pointAverageTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0.0"
@@ -334,7 +395,7 @@
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
-                    android:layout_width="180dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:layout_marginStart="10dp"
@@ -356,6 +417,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
                             <TextView
+                                android:id="@+id/completeTargetTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0个目标"

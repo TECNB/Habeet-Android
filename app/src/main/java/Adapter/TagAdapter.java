@@ -42,55 +42,75 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
         this.visibilityState2 = View.GONE;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if (tagItemList.size() == 0) {
+            return 1; // 返回1表示空页面
+        } else {
+            return 0; // 返回0表示正常数据项
+        }
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tag, parent, false);
-        return new ViewHolder(view);
+        if (viewType == 0) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tag, parent, false);
+            return new TagAdapter.ViewHolder(view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tag_null, parent, false);
+            return new TagAdapter.ViewHolder(view);
+        }
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        TagItem tagItem = tagItemList.get(position);
-        System.out.println(tagItem.getTagName());
-        holder.tagNameTextView.setText(tagItem.getTagName());
-        holder.tagDescriptionTextView.setText(tagItem.getTagDescription());
+        if (tagItemList.size() == 0) {
+            // 当数据为空时，可以设置空页面的提示信息或样式
 
-        holder.navDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 切换可见性状态
-                visibilityState1 = (visibilityState1 == View.GONE) ? View.VISIBLE : View.GONE;
-                visibilityState2 = (visibilityState2 == View.GONE) ? View.VISIBLE : View.GONE;
-
-                // 通知适配器数据已更改，以便刷新所有itemView
-                notifyDataSetChanged();
-            }
-        });
-
-        // 设置detailEdit的可见性状态
-        holder.detailEdit.setVisibility(visibilityState1);
-        // 设置detailDelete的可见性状态
-        holder.detailDelete.setVisibility(visibilityState2);
-
-        holder.detailDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteTag(tagItem, holder.getAdapterPosition(), holder.itemView.getContext());
-            }
-        });
-
-        // 添加渐变动画效果
-        if (visibilityState1 == View.VISIBLE) {
-            animateView(holder.detailEdit, true);
+            // 可以设置其他空页面的样式或操作
         } else {
-            animateView(holder.detailEdit, false);
-        }
+            TagItem tagItem = tagItemList.get(position);
+            System.out.println(tagItem.getTagName());
+            holder.tagNameTextView.setText(tagItem.getTagName());
+            holder.tagDescriptionTextView.setText(tagItem.getTagDescribe());
 
-        if (visibilityState2 == View.VISIBLE) {
-            animateView(holder.detailDelete, true);
-        } else {
-            animateView(holder.detailDelete, false);
+            holder.navDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 切换可见性状态
+                    visibilityState1 = (visibilityState1 == View.GONE) ? View.VISIBLE : View.GONE;
+                    visibilityState2 = (visibilityState2 == View.GONE) ? View.VISIBLE : View.GONE;
+
+                    // 通知适配器数据已更改，以便刷新所有itemView
+                    notifyDataSetChanged();
+                }
+            });
+
+            // 设置detailEdit的可见性状态
+            holder.detailEdit.setVisibility(visibilityState1);
+            // 设置detailDelete的可见性状态
+            holder.detailDelete.setVisibility(visibilityState2);
+
+            holder.detailDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    deleteTag(tagItem, holder.getAdapterPosition(), holder.itemView.getContext());
+                }
+            });
+
+            // 添加渐变动画效果
+            if (visibilityState1 == View.VISIBLE) {
+                animateView(holder.detailEdit, true);
+            } else {
+                animateView(holder.detailEdit, false);
+            }
+
+            if (visibilityState2 == View.VISIBLE) {
+                animateView(holder.detailDelete, true);
+            } else {
+                animateView(holder.detailDelete, false);
+            }
         }
     }
 
@@ -158,7 +178,11 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
     }
     @Override
     public int getItemCount() {
-        return tagItemList.size();
+        if (tagItemList.size() == 0) {
+            return 1; // 返回1项以显示空页面
+        } else {
+            return tagItemList.size();
+        }
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tagNameTextView;

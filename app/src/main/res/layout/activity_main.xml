@@ -85,6 +85,7 @@
                     app:cardElevation="0dp">
 
                     <TextView
+                        android:id="@+id/timerTagNameTextView"
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
                         android:background="@color/danZi"
@@ -96,10 +97,11 @@
                 </androidx.cardview.widget.CardView>
 
                 <TextView
+                    android:id="@+id/timerTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="01:30:00"
+                    android:text=""
                     android:textSize="40sp"
                     android:textColor="@color/zi"
                     android:textStyle="bold"
@@ -125,6 +127,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/zi">
                         <TextView
+                            android:id="@+id/timeButtonTextView"
                             android:layout_width="120dp"
                             android:layout_height="50dp"
                             android:text="开始"
@@ -139,6 +142,7 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+
         <androidx.cardview.widget.CardView
             android:id="@+id/targetMenuDetail"
             android:layout_below="@id/targetMenuNav"
@@ -150,100 +154,16 @@
             app:cardCornerRadius="20dp"
             app:cardElevation="5dp"
             android:visibility="gone">
-
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/targetMenuRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@color/white"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/timeTargetName"
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:textColor="@color/hui"
-                        android:textStyle="bold"
-                        android:text="测试1" />
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="29dp"
-                        android:src="@drawable/coin"
-                        android:layout_toLeftOf="@id/timeTargetPoint"/>
-                    <TextView
-                        android:id="@+id/timeTargetPoint"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:textColor="@color/hui"
-                        android:textStyle="bold"
-                        android:text="X2"
-                        android:layout_toLeftOf="@id/timeTargetDeadline"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="10dp"/>
-
-
-                    <TextView
-                        android:id="@+id/timeTargetDeadline"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:textColor="@color/hui"
-                        android:textStyle="bold"
-                        android:text="还有3天"
-                        android:layout_alignParentEnd="true"/>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@color/white"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/timeTargetName2"
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:textColor="@color/hui"
-                        android:textStyle="bold"
-                        android:text="测试2" />
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="29dp"
-                        android:src="@drawable/coin"
-                        android:layout_toLeftOf="@id/timeTargetPoint2"/>
-                    <TextView
-                        android:id="@+id/timeTargetPoint2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:textColor="@color/hui"
-                        android:textStyle="bold"
-                        android:text="X2"
-                        android:layout_toLeftOf="@id/timeTargetDeadline2"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="10dp"/>
-
-
-                    <TextView
-                        android:id="@+id/timeTargetDeadline2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:textColor="@color/hui"
-                        android:textStyle="bold"
-                        android:text="还有3天"
-                        android:layout_alignParentEnd="true"/>
-                </RelativeLayout>
-            </LinearLayout>
-
-
+                app:layout_constraintTop_toBottomOf="@id/Nav"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.cardview.widget.CardView>
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/tagMenuDetail"
@@ -259,74 +179,10 @@
                 android:orientation="vertical"
                 android:background="@color/zi"
                 android:padding="15dp">
-                <LinearLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/tagMenuRecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardElevation="0dp"
-                        app:cardCornerRadius="20dp">
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@color/danZi"
-                            android:paddingTop="2dp"
-                            android:paddingBottom="2dp"
-                            android:paddingRight="20dp"
-                            android:paddingLeft="20dp">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/zi"
-                                android:text="测试1"/>
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardElevation="0dp"
-                        app:cardCornerRadius="20dp"
-                        android:layout_marginLeft="20dp">
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@color/white"
-                            android:paddingTop="2dp"
-                            android:paddingBottom="2dp"
-                            android:paddingRight="20dp"
-                            android:paddingLeft="20dp">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/zi"
-                                android:text="测试2"/>
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardElevation="0dp"
-                        app:cardCornerRadius="20dp"
-                        android:layout_marginLeft="20dp">
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@color/white"
-                            android:paddingTop="2dp"
-                            android:paddingBottom="2dp"
-                            android:paddingRight="20dp"
-                            android:paddingLeft="20dp">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/zi"
-                                android:text="测试3"/>
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-
-                </LinearLayout>
+                    android:layout_height="30dp"/>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -357,7 +213,8 @@
                                     android:layout_height="20dp"
                                     android:src="@drawable/countdownafter"/>
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:id="@+id/tagMenuTime"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/zi"
                                     android:text="1小时30分钟"/>
@@ -373,6 +230,7 @@
                                     android:layout_height="20dp"
                                     android:src="@drawable/coin"/>
                                 <TextView
+                                    android:id="@+id/tagMenuDescribe"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/zi"
@@ -386,7 +244,7 @@
                             android:layout_height="match_parent"
                             android:gravity="center">
                             <androidx.cardview.widget.CardView
-                                android:id="@+id/homeCardView"
+                                android:id="@+id/timeCardView"
                                 android:layout_width="80dp"
                                 android:layout_height="30dp"
                                 app:cardCornerRadius="20dp">
@@ -406,7 +264,6 @@
                                 </LinearLayout>
                             </androidx.cardview.widget.CardView>
                         </LinearLayout>
-
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 

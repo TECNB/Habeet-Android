@@ -1,5 +1,7 @@
 package com.example.habeet_android;
 
+import static com.example.habeet_android.HomeActivity.userEmail;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -391,7 +393,7 @@ public class TargetActivity extends AppCompatActivity {
         // 创建JSON对象
         JSONObject requestData = new JSONObject();
         try {
-            requestData.put("userEmail", "3489044730@qq.com");
+            requestData.put("userEmail", userEmail);
             requestData.put("ifTargetUpdate", 0);
         } catch (JSONException e) {
             e.printStackTrace();

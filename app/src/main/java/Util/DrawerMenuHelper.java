@@ -16,6 +16,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.habeet_android.HelperActivity;
+import com.example.habeet_android.LoginNavActivity;
 import com.example.habeet_android.MainActivity;
 import com.example.habeet_android.R;
 import com.example.habeet_android.SettingActivity;
@@ -103,6 +104,8 @@ public class DrawerMenuHelper {
         LinearLayout drawerMenuTo6=navigationView.findViewById(drawerMenuToBIds[5]);
         LinearLayout drawerMenuTo7=navigationView.findViewById(drawerMenuToBIds[6]);
 
+        LinearLayout drawerMenuTo8=navigationView.findViewById(R.id.drawerMenuTo8);
+
         drawerMenuTo1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,6 +154,14 @@ public class DrawerMenuHelper {
             public void onClick(View view) {
                 startActivity(HelperActivity.class);
                 Log.v("drawerMenu","点击抽屉的第七个按钮");
+            }
+        });
+
+        drawerMenuTo8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(LoginNavActivity.class);
+                Log.v("drawerMenu","点击抽屉的第八个按钮");
             }
         });
 

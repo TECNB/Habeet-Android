@@ -1,5 +1,7 @@
 package com.example.habeet_android;
 
+import static com.example.habeet_android.HomeActivity.userEmail;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -87,7 +89,7 @@ public class StoreActivity extends AppCompatActivity {
         // 请求URL
         String url = "https://tengenchang.top/store/get";
         // 请求数据
-        String requestData = "3489044730@qq.com";
+        String requestData = userEmail;
         // 设置请求体
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(JSON, requestData);

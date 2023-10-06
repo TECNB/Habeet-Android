@@ -1,5 +1,7 @@
 package Adapter;
 
+import static com.example.habeet_android.HomeActivity.userEmail;
+
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
@@ -140,7 +142,7 @@ public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapte
         // 创建JSON对象
         JSONObject requestData = new JSONObject();
         try {
-            requestData.put("userEmail", "3489044730@qq.com");
+            requestData.put("userEmail", userEmail);
             requestData.put("targetName", targetItem.getTargetName());
             requestData.put("ifPoints", 0);
             requestData.put("targetId", Long.valueOf(targetItem.getTargetId()));
@@ -200,7 +202,7 @@ public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapte
         // 创建JSON对象
         JSONObject requestData = new JSONObject();
         try {
-            requestData.put("userEmail", "3489044730@qq.com");
+            requestData.put("userEmail", userEmail);
             requestData.put("targetName", targetItem.getTargetName());
             requestData.put("ifPoints", 1);
             requestData.put("targetId", Long.valueOf(targetItem.getTargetId()));
@@ -237,7 +239,7 @@ public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapte
                         @Override
                         public void run() {
                             notifyItemRangeChanged(position, targetItemList.size());
-                            Toast.makeText(context.getApplicationContext(), "删除目标成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context.getApplicationContext(), "完成目标", Toast.LENGTH_SHORT).show();
                         }
                     });
                 } else {

@@ -2,7 +2,12 @@ package Item;
 
 public class TagItem {
     private String tagName;
-    private String tagDescription;
+    private String tagDescribe;
+
+    private String tagPoint;
+
+    private String tagHour;
+    private String tagMinute;
 
     private boolean isDetailsVisible; // 新增的字段
 
@@ -16,17 +21,32 @@ public class TagItem {
         isDetailsVisible = visible;
     }
 
-    public TagItem(String tagName, String tagDescription) {
+    public TagItem(String tagName, String tagDescribe,String tagPoint,String tagHour,String tagMinute) {
         this.tagName = tagName;
-        this.tagDescription = tagDescription;
+        this.tagDescribe = tagDescribe;
+        this.tagPoint = tagPoint;
+        this.tagHour = tagHour;
+        this.tagMinute = tagMinute;
     }
 
     public String getTagName() {
         return tagName;
     }
 
-    public String getTagDescription() {
-        return tagDescription;
+    public String getTagDescribe() {
+        return tagDescribe;
+    }
+
+    public String getTagPoint() {
+        return tagPoint;
+    }
+
+    public String getTagHour() {
+        return tagHour;
+    }
+
+    public String getTagMinute() {
+        return tagMinute;
     }
 
 }
