@@ -247,7 +247,11 @@ public class SignActivity extends AppCompatActivity {
 
                         if("00000".equals(code)){
                             userName=userNameData;
-                            userPoint=userPointData;
+                            if (userPointData==null){
+                                userPoint="0";
+                            }else{
+                                userPoint=userPointData;
+                            }
                             startActivity(MainActivity.class);
                         }else{
 

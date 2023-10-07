@@ -142,6 +142,9 @@ public class MainActivity extends AppCompatActivity {
                 arrowDownImage.setVisibility(View.GONE);
 
                 targetMenuDetail.setVisibility(View.VISIBLE);
+                if (targetMenuList.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "还没有目标，快去建立吧", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
