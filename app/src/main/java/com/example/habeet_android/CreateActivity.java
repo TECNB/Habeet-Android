@@ -7,6 +7,7 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
@@ -42,11 +43,11 @@ public class CreateActivity extends AppCompatActivity {
 
     private String Name;
     private String Describe;
-    private Integer Point;
+    private Integer Point=0;
     private String deadlineString="";
 
-    private Integer timeHour;
-    private Integer timeMinute;
+    private Integer timeHour=0;
+    private Integer timeMinute=0;
 
     private TextView deadlineTextView;
     private TextView scoreTextView;
@@ -118,18 +119,45 @@ public class CreateActivity extends AppCompatActivity {
         saveTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Name=nameEditText.getText().toString();
-                Describe=describeEditText.getText().toString();
+                // 获取输入框中的值
+                Name = nameEditText.getText().toString();
+                Describe = describeEditText.getText().toString();
+
+                // 检查Name不为空
+                if (TextUtils.isEmpty(Name)) {
+                    Toast.makeText(getApplicationContext(), "请输入名称", Toast.LENGTH_SHORT).show();
+                    return; // 如果Name为空，不执行后续操作
+                }
+
+                // 检查Describe不为空
+                if (TextUtils.isEmpty(Describe)) {
+                    Toast.makeText(getApplicationContext(), "请输入备注", Toast.LENGTH_SHORT).show();
+                    return; // 如果Describe为空，不执行后续操作
+                }
+
+                // 检查deadlineString不为空
+                if ((timeMinute==0&&timeHour==0)&&!"Target".equals(sourceActivity)) {
+                    Toast.makeText(getApplicationContext(), "请选择时间", Toast.LENGTH_SHORT).show();
+                    return; // 如果deadlineString为空，不执行后续操作
+                }
+
+                // 检查Point不为0
+                if (Point == 0) {
+                    Toast.makeText(getApplicationContext(), "请选择分数", Toast.LENGTH_SHORT).show();
+                    return; // 如果Point为0，不执行后续操作
+                }
+
                 // 根据不同的标志进行不同的创建
                 if ("Tag".equals(sourceActivity)) {
                     saveTag();
                 } else if ("Store".equals(sourceActivity)) {
                     saveStore();
-                }else if ("Target".equals(sourceActivity)) {
+                } else if ("Target".equals(sourceActivity)) {
                     saveTarget();
                 }
             }
         });
+
     }
 
     private void saveTag(){

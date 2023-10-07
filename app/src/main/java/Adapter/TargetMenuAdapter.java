@@ -1,6 +1,7 @@
 package Adapter;
 
 import static com.example.habeet_android.HomeActivity.userEmail;
+import static com.example.habeet_android.LoginActivity.userPoint;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,7 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,10 @@ import okhttp3.Response;
 
 public class TargetMenuAdapter extends RecyclerView.Adapter<TargetMenuAdapter.ViewHolder> {
     private List<TargetItem> targetMenuItemList;
+
+    private String targetPoint;
+
+    private TextView navPointTextView;
 
     public TargetMenuAdapter(List<TargetItem> targetMenuItemList) {
         this.targetMenuItemList = targetMenuItemList;
@@ -82,6 +87,8 @@ public class TargetMenuAdapter extends RecyclerView.Adapter<TargetMenuAdapter.Vi
             requestData.put("targetName", targetItem.getTargetName());
             requestData.put("ifPoints", 1);
             requestData.put("targetId", Long.valueOf(targetItem.getTargetId()));
+
+            targetPoint=targetItem.getTargetPoint();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -101,6 +108,7 @@ public class TargetMenuAdapter extends RecyclerView.Adapter<TargetMenuAdapter.Vi
                 if (response.isSuccessful()) {
                     // 从数据源中删除项
                     targetMenuItemList.remove(position);
+                    userPoint = String.valueOf(Integer.parseInt(userPoint) + Integer.parseInt(targetPoint));
 
                     // 通知适配器删除了特定位置的项
                     ((Activity) context).runOnUiThread(new Runnable() {
@@ -115,6 +123,7 @@ public class TargetMenuAdapter extends RecyclerView.Adapter<TargetMenuAdapter.Vi
                         @Override
                         public void run() {
                             notifyItemRangeChanged(position, targetMenuItemList.size());
+                            navPointTextView.setText(userPoint);
                             Toast.makeText(context.getApplicationContext(), "完成目标", Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -139,7 +148,7 @@ public class TargetMenuAdapter extends RecyclerView.Adapter<TargetMenuAdapter.Vi
         TextView targetMenuPointTextView;
         TextView targetMenuDeadlineTextView;
 
-        RelativeLayout targetMenuDetail;
+        LinearLayout targetMenuDetail;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -150,6 +159,11 @@ public class TargetMenuAdapter extends RecyclerView.Adapter<TargetMenuAdapter.Vi
 
 
             targetMenuDetail = itemView.findViewById(R.id.timeTargetDetail);
+
+            // 获取activity_nav.xml中的根布局
+            View Nav = ((Activity) itemView.getContext()).findViewById(R.id.Nav);
+
+            navPointTextView = Nav.findViewById(R.id.navPointTextView);
         }
     }
 }

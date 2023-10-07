@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
     private ImageView loginBack;
     private CardView loginCardView;
     private String userPass;
+    private TextView forgetPassWord;
+    private TextView SignTitleBelow2;
 
     public static String userName;
     public static String userPoint;
@@ -41,16 +44,42 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         userPassEditText=findViewById(R.id.userPass);
+        forgetPassWord=findViewById(R.id.forgetPassWord);
 
 
         loginCardView=findViewById(R.id.loginCardView);
         loginBack=findViewById(R.id.loginBack);
 
+
+        SignTitleBelow2=findViewById(R.id.SignTitleBelow2);
+        SignTitleBelow2.setText(userEmail);
+
+        SignTitleBelow2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(HomeActivity.class);
+            }
+        });
+
+
         loginCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 userPass=userPassEditText.getText().toString();
-                checkPassword();
+                // 检查userPass和userPassConfirm是否相同
+                if (userPass.isEmpty()) {
+                    // 提示用户密码不匹配
+                    Toast.makeText(getApplicationContext(), "请输入密码", Toast.LENGTH_SHORT).show();
+                } else  {
+                    checkPassword();
+                }
+            }
+        });
+
+        forgetPassWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(ForgetPasswordActivity.class);
             }
         });
 

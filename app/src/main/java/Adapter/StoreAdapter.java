@@ -1,5 +1,7 @@
 package Adapter;
 
+import static com.example.habeet_android.LoginActivity.userPoint;
+
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
@@ -7,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -32,34 +35,58 @@ import okhttp3.Response;
 public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> {
 
     private List<StoreItem> storeItemList;
+    private TextView navPointTextView;
+    private String storePoint;
+
 
     public StoreAdapter(List<StoreItem> storeItemList) {
         this.storeItemList = storeItemList;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if (storeItemList.size() == 0) {
+            return 1; // 返回1表示空页面
+        } else {
+            return 0; // 返回0表示正常数据项
+        }
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_store, parent, false);
-        return new ViewHolder(view);
+        if (viewType == 0) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_store, parent, false);
+            return new StoreAdapter.ViewHolder(view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_store_null, parent, false);
+            return new StoreAdapter.ViewHolder(view);
+        }
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        StoreItem storeItem = storeItemList.get(position);
-        System.out.println(storeItem.getStoreName());
-        holder.storeNameTextView.setText(storeItem.getStoreName());
-        holder.storeDescriptionTextView.setText(storeItem.getStoreDescribe());
-        holder.storeHourTextView.setText(storeItem.getStoreHour());
-        holder.storeMinuteTextView.setText(storeItem.getStoreMinute());
-        holder.storePointTextView.setText("X"+storeItem.getStorePoint());
 
-        holder.storeDeleteCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteStore(storeItem, holder.getAdapterPosition(), holder.itemView.getContext());
-            }
-        });
+        if (storeItemList.size() == 0) {
+            // 当数据为空时，可以设置空页面的提示信息或样式
+
+            // 可以设置其他空页面的样式或操作
+        } else {
+            StoreItem storeItem = storeItemList.get(position);
+            System.out.println(storeItem.getStoreName());
+            holder.storeNameTextView.setText(storeItem.getStoreName());
+            holder.storeDescriptionTextView.setText(storeItem.getStoreDescribe());
+            holder.storeHourTextView.setText(storeItem.getStoreHour());
+            holder.storeMinuteTextView.setText(storeItem.getStoreMinute());
+            holder.storePointTextView.setText("X"+storeItem.getStorePoint());
+
+            holder.storeDeleteCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    deleteStore(storeItem, holder.getAdapterPosition(), holder.itemView.getContext());
+                }
+            });
+        }
     }
 
 
@@ -71,6 +98,8 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
         JSONObject requestData = new JSONObject();
         try {
             requestData.put("storeName", storeItem.getStoreName());
+            storePoint=storeItem.getStorePoint();
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -90,11 +119,15 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
                 if (response.isSuccessful()) {
                     // 从数据源中删除项
                     storeItemList.remove(position);
+                    // 合并为一个式子
+                    userPoint = String.valueOf(Integer.parseInt(userPoint) - Integer.parseInt(storePoint));
 
                     // 通知适配器删除了特定位置的项
                     ((Activity) context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            Toast.makeText(context.getApplicationContext(), "兑换商品成功", Toast.LENGTH_SHORT).show();
+                            navPointTextView.setText(userPoint);
                             notifyItemRemoved(position);
                         }
                     });
@@ -122,7 +155,11 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return storeItemList.size();
+        if (storeItemList.size() == 0) {
+            return 1; // 返回1项以显示空页面
+        } else {
+            return storeItemList.size();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -140,6 +177,11 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
             storePointTextView = itemView.findViewById(R.id.storePoint);
             storeHourTextView = itemView.findViewById(R.id.storeHour);
             storeMinuteTextView = itemView.findViewById(R.id.storeMinute);
+
+            // 获取activity_nav.xml中的根布局
+            View Nav = ((Activity) itemView.getContext()).findViewById(R.id.Nav);
+
+            navPointTextView = Nav.findViewById(R.id.navPointTextView);
 
             storeDeleteCardView=itemView.findViewById(R.id.storeDelete);
         }

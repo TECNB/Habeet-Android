@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -46,7 +47,14 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 userEmail=userEmailEditText.getText().toString();
-                UserDataManager();
+                // 使用正则表达式检查邮箱格式
+                if (isValidQQEmail(userEmail)) {
+                    // 邮箱格式正确，执行你的UserDataManager方法
+                    UserDataManager();
+                } else {
+                    // 邮箱格式不正确，显示错误消息或采取适当的操作
+                    Toast.makeText(getApplicationContext(), "邮箱格式不正确", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -107,6 +115,12 @@ public class HomeActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         });
+    }
+    // 验证邮箱是否为QQ邮箱的方法
+    private boolean isValidQQEmail(String email) {
+        // QQ邮箱的正则表达式
+        String qqEmailPattern = "^[a-zA-Z0-9_\\-\\.]+@qq\\.com$";
+        return email.matches(qqEmailPattern);
     }
     private void startActivity(Class<?> cls) {
         Intent intent = new Intent(this, cls);

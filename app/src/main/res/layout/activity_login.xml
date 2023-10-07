@@ -23,13 +23,38 @@
             android:textStyle="bold"
             android:textSize="30sp"
             android:layout_marginTop="20dp"/>
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="将使用3489044740@qq.com登录"
-            android:textColor="@color/hui"
-            android:textSize="15sp"
-            android:layout_marginTop="10dp"/>
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/SignTitleBelow1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="将为"
+                android:textColor="@color/hui"
+                android:textSize="15sp"
+                android:layout_marginTop="10dp"/>
+            <TextView
+                android:id="@+id/SignTitleBelow2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3489044740@qq.com"
+                android:textColor="@color/lan"
+                android:textSize="15sp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"/>
+            <TextView
+                android:id="@+id/SignTitleBelow3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="找回密码"
+                android:textColor="@color/hui"
+                android:textSize="15sp"
+                android:layout_marginTop="10dp"/>
+
+        </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,6 +83,7 @@
                     android:id="@+id/userPass"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:inputType="textPassword"
                     android:hint="请输入密码"
                     android:textColorHint="@color/hui"
                     android:textColor="@color/black"
@@ -76,9 +102,10 @@
             tools:layout_editor_absoluteY="1dp"
             tools:ignore="MissingConstraints">
             <TextView
+                android:id="@+id/forgetPassWord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="忘记密码"
+                android:text="忘记密码?"
                 android:textColor="@color/lan"
                 android:textSize="15sp"
                 android:layout_marginTop="10dp"

@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView tagMenuRecyclerView;
     private TagMenuAdapter tagMenuAdapter;
     private List<TagItem> tagMenuList;
+    private String targetPoint;
+    private TextView navPointTextView;
 
     public static TextView timerTextView;
     public static TextView timeButtonTextView;
@@ -126,6 +128,11 @@ public class MainActivity extends AppCompatActivity {
         // 初始化适配器并将其与RecyclerView关联
         tagMenuAdapter = new TagMenuAdapter(tagMenuList);
         tagMenuRecyclerView.setAdapter(tagMenuAdapter);
+
+        // 获取activity_nav.xml中的根布局
+        View Nav = findViewById(R.id.Nav);
+
+        navPointTextView = Nav.findViewById(R.id.navPointTextView);
 
 
         arrowDownImage.setOnClickListener(new View.OnClickListener() {
@@ -281,12 +288,12 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
 
                     // 通知适配器删除了特定位置的项
-                    userPoint=userPoint+tagPoint;
+                    userPoint = String.valueOf(Integer.parseInt(userPoint) + Integer.parseInt(tagPoint));
 
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
+                            navPointTextView.setText(userPoint);
                         }
                     });
                 } else {

@@ -2,6 +2,8 @@ package Adapter;
 
 import static com.example.habeet_android.HomeActivity.userEmail;
 
+import static java.security.AccessController.getContext;
+
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
@@ -94,7 +96,7 @@ public class TargetCompletedAdapter extends RecyclerView.Adapter<TargetCompleted
             holder.targetCompletedPointCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    finishTarget(targetItem, holder.getAdapterPosition(), holder.itemView.getContext());
+                    Toast.makeText(holder.itemView.getContext().getApplicationContext(), "目标已经完成", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -177,67 +179,6 @@ public class TargetCompletedAdapter extends RecyclerView.Adapter<TargetCompleted
                         @Override
                         public void run() {
                             notifyItemRangeChanged(position, targetItemList.size());
-                        }
-                    });
-                } else {
-                    // 请求失败，输出错误信息
-                    Log.e("TargetActivity", "请求失败，状态码: " + response.code());
-                    Log.e("TargetActivity", response.body().string());
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-    private void finishTarget(TargetItem targetItem, int position, Context context) {
-        OkHttpClient client = new OkHttpClient();
-        // 请求URL
-        String url = "https://tengenchang.top/target/delete";
-        System.out.println("targetId:"+targetItem.getTargetId());
-        // 创建JSON对象
-        JSONObject requestData = new JSONObject();
-        try {
-            requestData.put("userEmail", userEmail);
-            requestData.put("targetName", targetItem.getTargetName());
-            requestData.put("ifPoints", 1);
-            requestData.put("targetId", Long.valueOf(targetItem.getTargetId()));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        // 设置请求体
-        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        RequestBody requestBody = RequestBody.create(JSON, requestData.toString());
-        // 创建POST请求
-        Request request = new Request.Builder()
-                .url(url)
-                .post(requestBody)
-                .build();
-
-        // 使用OkHttp3执行异步网络请求
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    // 从数据源中删除项
-                    targetItemList.remove(position);
-
-                    // 通知适配器删除了特定位置的项
-                    ((Activity) context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            notifyItemRemoved(position);
-                        }
-                    });
-
-                    // 通知适配器更新从删除位置到列表末尾的所有项
-                    ((Activity) context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            notifyItemRangeChanged(position, targetItemList.size());
-                            Toast.makeText(context.getApplicationContext(), "完成目标", Toast.LENGTH_SHORT).show();
                         }
                     });
                 } else {

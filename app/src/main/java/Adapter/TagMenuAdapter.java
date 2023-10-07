@@ -141,6 +141,9 @@ public class TagMenuAdapter extends RecyclerView.Adapter<TagMenuAdapter.ViewHold
             tagMenuDetail = ((Activity) itemView.getContext()).findViewById(R.id.tagMenuDetail);
             tagMenuTimeTextView = tagMenuDetail.findViewById(R.id.tagMenuTime);
             tagMenuDescribeTextView = tagMenuDetail.findViewById(R.id.tagMenuDescribe);
+
+            // 获取activity_nav.xml中的根布局
+            View Nav = ((Activity) itemView.getContext()).findViewById(R.id.Nav);
         }
     }
 }

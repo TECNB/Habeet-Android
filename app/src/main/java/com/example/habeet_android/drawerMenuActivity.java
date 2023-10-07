@@ -1,11 +1,8 @@
 package com.example.habeet_android;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class drawerMenuActivity extends AppCompatActivity {
 
@@ -13,5 +10,7 @@ public class drawerMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer_menu);
+
+
     }
 }

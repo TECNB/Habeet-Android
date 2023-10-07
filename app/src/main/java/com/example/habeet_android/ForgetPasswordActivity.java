@@ -30,10 +30,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class SignActivity extends AppCompatActivity {
+public class ForgetPasswordActivity extends AppCompatActivity {
     private EditText signUserPassEditText;
     private EditText signUserPassConfirmEditText;
-    private EditText signUserNameEditText;
     private EditText signCodeEditText;
     private ImageView signBack;
     private CardView signCardView;
@@ -49,13 +48,11 @@ public class SignActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private boolean isCounting = false;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign);
+        setContentView(R.layout.activity_forget_password);
 
-        signUserNameEditText=findViewById(R.id.signUserName);
         signUserPassEditText=findViewById(R.id.signUserPass);
         signUserPassConfirmEditText=findViewById(R.id.signUserPassConfirm);
         signCodeEditText=findViewById(R.id.signCode);
@@ -68,7 +65,6 @@ public class SignActivity extends AppCompatActivity {
 
         codeText = findViewById(R.id.codeText);
 
-
         SignTitleBelow2=findViewById(R.id.SignTitleBelow2);
         SignTitleBelow2.setText(userEmail);
 
@@ -79,11 +75,9 @@ public class SignActivity extends AppCompatActivity {
             }
         });
 
-
         signCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userName = signUserNameEditText.getText().toString();
                 userPass = signUserPassEditText.getText().toString();
                 userPassConfirm = signUserPassConfirmEditText.getText().toString();
                 userCode = signCodeEditText.getText().toString();
@@ -97,10 +91,7 @@ public class SignActivity extends AppCompatActivity {
                 } else if (userCode.isEmpty()) {
                     // 如果userCode为空，显示错误提示
                     Toast.makeText(getApplicationContext(), "请输入验证码", Toast.LENGTH_SHORT).show();
-                } else if (userName.isEmpty()) {
-                    // 如果userCode为空，显示错误提示
-                    Toast.makeText(getApplicationContext(), "请输入名称", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     // 所有条件都满足，执行sign()方法
                     sign();
                 }
@@ -108,11 +99,10 @@ public class SignActivity extends AppCompatActivity {
             }
         });
 
-
         signBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(HomeActivity.class);
+                startActivity(LoginActivity.class);
             }
         });
         codeCardView.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +116,7 @@ public class SignActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
     private void startCountDown() {
         codeCardView.setEnabled(false); // 禁用点击
@@ -152,7 +143,7 @@ public class SignActivity extends AppCompatActivity {
         JSONObject requestData = new JSONObject();
         try {
             requestData.put("userEmail", userEmail);
-            requestData.put("ifUpdate", 0);
+            requestData.put("ifUpdate", 1);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -216,7 +207,7 @@ public class SignActivity extends AppCompatActivity {
             requestData.put("picUrl", "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0");
             requestData.put("userName", userName);
             requestData.put("userCode", userCode);
-            requestData.put("ifUpdate", 0);
+            requestData.put("ifUpdate", 1);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -248,7 +239,7 @@ public class SignActivity extends AppCompatActivity {
                         if("00000".equals(code)){
                             userName=userNameData;
                             userPoint=userPointData;
-                            startActivity(MainActivity.class);
+                            startActivity(LoginActivity.class);
                         }else{
 
                         }

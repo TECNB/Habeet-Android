@@ -111,20 +111,25 @@ public class StoreActivity extends AppCompatActivity {
                         JSONObject jsonResponse = new JSONObject(responseBody);
                         JSONArray data = jsonResponse.getJSONArray("data");
 
+
                         // 清空已有数据
                         storeList.clear();
 
                         // 遍历JSON数据并添加到tagList中
                         for (int i = 0; i < data.length(); i++) {
                             JSONObject item = data.getJSONObject(i);
-                            String storeName = item.getString("storeName");
-                            String storeDescribe = item.getString("storeDescribe");
-                            String storePoint = item.getString("storePoint");
-                            String storeHour = item.getString("storeHour");
-                            String storeMinute = item.getString("storeMinute");
+                            String ifStoreNull=item.getString("ifStoreNull");
+                            if (!"1".equals(ifStoreNull)){
+                                String storeName = item.getString("storeName");
+                                String storeDescribe = item.getString("storeDescribe");
+                                String storePoint = item.getString("storePoint");
+                                String storeHour = item.getString("storeHour");
+                                String storeMinute = item.getString("storeMinute");
 
-                            // 创建TagItem对象并添加到tagList中
-                            storeList.add(new StoreItem(storeName, storeDescribe,storePoint,storeHour,storeMinute));
+                                // 创建TagItem对象并添加到tagList中
+                                storeList.add(new StoreItem(storeName, storeDescribe,storePoint,storeHour,storeMinute));
+                            }
+
                         }
 
                         // 更新 UI，确保在主线程中执行

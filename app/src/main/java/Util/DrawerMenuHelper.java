@@ -44,12 +44,17 @@ public class DrawerMenuHelper {
                 // 修改UI
                 // 获取activity_nav.xml中的根布局
                 View Nav = activity.findViewById(R.id.Nav);
+
+                NavigationView navigationView = activity.findViewById(R.id.drawerMenu);
                 // 获取navPoint和navAvatar控件
                 TextView navNameTextView = Nav.findViewById(R.id.navNameTextView);
                 TextView navPointTextView = Nav.findViewById(R.id.navPointTextView);
 
+                TextView drawerMenuNameTextView=navigationView.findViewById(R.id.drawerMenuNameTextView);
+
                 navNameTextView.setText(userName);
                 navPointTextView.setText(userPoint);
+                drawerMenuNameTextView.setText(userName);
             }
         });
     }
@@ -105,6 +110,8 @@ public class DrawerMenuHelper {
         LinearLayout drawerMenuTo7=navigationView.findViewById(drawerMenuToBIds[6]);
 
         LinearLayout drawerMenuTo8=navigationView.findViewById(R.id.drawerMenuTo8);
+
+
 
         drawerMenuTo1.setOnClickListener(new View.OnClickListener() {
             @Override

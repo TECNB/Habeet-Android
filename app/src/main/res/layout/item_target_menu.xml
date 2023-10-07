@@ -1,53 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/timeTargetDetail"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:padding="10dp"
-    tools:ignore="MissingConstraints">
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/timeTargetName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_weight="2"
         android:textColor="@color/hui"
         android:textStyle="bold"
-        android:text="测试1"
-        android:layout_centerVertical="true"/>
+        android:text="测试1"/>
 
-    <ImageView
-        android:id="@+id/timeTargetImage"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/coin"
-        android:layout_marginLeft="120dp"
-        android:layout_toRightOf="@id/timeTargetName"
-        android:layout_centerVertical="true"/>
-    <TextView
-        android:id="@+id/timeTargetPoint"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="@color/hui"
-        android:textStyle="bold"
-        android:text="X2"
-        android:layout_toRightOf="@id/timeTargetImage"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_centerVertical="true"/>
+        android:layout_weight="1"
+        android:gravity="end">
+        <ImageView
+            android:id="@+id/timeTargetImage"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/coin"/>
+
+        <TextView
+            android:id="@+id/timeTargetPoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/hui"
+            android:textStyle="bold"
+            android:text="X2"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/timeTargetDeadline"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_weight="1"
+        android:gravity="end"
         android:textColor="@color/hui"
         android:textStyle="bold"
-        android:text="还有3天"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"/>
-</RelativeLayout>
+        android:text="还有3天"/>
+</LinearLayout>

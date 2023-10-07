@@ -1,6 +1,7 @@
 package Adapter;
 
 import static com.example.habeet_android.HomeActivity.userEmail;
+import static com.example.habeet_android.LoginActivity.userPoint;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
@@ -38,6 +39,9 @@ public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapte
     private List<TargetItem> targetItemList;
     private int targetNoTimeVisibilityState1 = View.VISIBLE;
     private int targetNoTimeVisibilityState2= View.GONE;
+
+    private TextView navPointTextView;
+    private String targetPoint;
 
     public TargetNoTimeAdapter(List<TargetItem> targetItemList, int visibilityState1, int visibilityState2) {
         this.targetItemList = targetItemList;
@@ -206,6 +210,8 @@ public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapte
             requestData.put("targetName", targetItem.getTargetName());
             requestData.put("ifPoints", 1);
             requestData.put("targetId", Long.valueOf(targetItem.getTargetId()));
+
+            targetPoint=targetItem.getTargetPoint();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -225,6 +231,7 @@ public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapte
                 if (response.isSuccessful()) {
                     // 从数据源中删除项
                     targetItemList.remove(position);
+                    userPoint = String.valueOf(Integer.parseInt(userPoint) + Integer.parseInt(targetPoint));
 
                     // 通知适配器删除了特定位置的项
                     ((Activity) context).runOnUiThread(new Runnable() {
@@ -239,6 +246,7 @@ public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapte
                         @Override
                         public void run() {
                             notifyItemRangeChanged(position, targetItemList.size());
+                            navPointTextView.setText(userPoint);
                             Toast.makeText(context.getApplicationContext(), "完成目标", Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -290,6 +298,10 @@ public class TargetNoTimeAdapter extends RecyclerView.Adapter<TargetNoTimeAdapte
             targetNoTimePointCardView = itemView.findViewById(R.id.targetNoTimePointCardView);
             targetNoTimeDelete = itemView.findViewById(R.id.targetNoTimeDelete);
             targetNoTimeDayDifference = itemView.findViewById(R.id.targetNoTimeDayDifference);
+
+
+            navPointTextView = Nav.findViewById(R.id.navPointTextView);
+
         }
     }
 }

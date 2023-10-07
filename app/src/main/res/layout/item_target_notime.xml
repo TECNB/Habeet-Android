@@ -7,13 +7,13 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="10dp"
     android:layout_marginEnd="10dp"
-    android:layout_marginTop="40dp"
+    android:layout_marginTop="20dp"
     app:cardElevation="0dp"
     app:cardCornerRadius="20dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="100dp"
         android:orientation="horizontal"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp"
@@ -55,70 +55,77 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_alignParentRight="true">
-            <androidx.cardview.widget.CardView
-                android:id="@+id/targetNoTimePointCardView"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginTop="30dp"
-                app:cardElevation="0dp"
-                app:cardCornerRadius="20dp"
-                android:layout_alignParentRight="true">
-                <LinearLayout
-                    android:layout_width="90dp"
-                    android:layout_height="35dp"
-                    android:background="@color/red"
-                    android:gravity="center">
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/coin" />
-                    <TextView
-                        android:id="@+id/targetNoTimePoint"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="X1"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-            <TextView
-                android:id="@+id/targetNoTimeDayDifference"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="任意时间"
-                android:layout_below="@id/targetNoTimePointCardView"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="25dp"
-                android:layout_marginTop="10dp"
-                android:textSize="16sp"
-                android:textColor="@color/hui"/>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/targetNoTimeDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp"
-                app:cardElevation="0dp"
-                app:cardCornerRadius="20dp"
-                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="vertical"
                 android:layout_centerVertical="true"
-                android:visibility="gone">
+                android:layout_alignParentRight="true">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/targetNoTimePointCardView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="5dp"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="20dp">
+                    <LinearLayout
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:background="@color/red"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/coin" />
+                        <TextView
+                            android:id="@+id/targetNoTimePoint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="X1"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/targetNoTimeDayDifference"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="任意时间"
+                    android:textSize="16sp"
+                    android:textColor="@color/hui" />
 
-                <LinearLayout
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:background="@drawable/gradient_background_purple"
-                    android:gravity="center">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/targetNoTimeDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="20dp"
+                    android:visibility="gone">
 
-                    <ImageView
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:src="@drawable/x" />
-                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/gradient_background_purple"
+                        android:gravity="center">
 
-            </androidx.cardview.widget.CardView>
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:src="@drawable/x" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+
+
         </RelativeLayout>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

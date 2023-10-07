@@ -1,6 +1,7 @@
 package Adapter;
 
 import static com.example.habeet_android.HomeActivity.userEmail;
+import static com.example.habeet_android.LoginActivity.userPoint;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
@@ -39,6 +40,9 @@ public class TargetWithTimeAdapter extends RecyclerView.Adapter<TargetWithTimeAd
     private List<TargetItem> targetItemList;
     private int targetWithTimeVisibilityState1 = View.VISIBLE;
     private int targetWithTimeVisibilityState2 = View.GONE;
+
+    private TextView navPointTextView;
+    private String targetPoint;
 
     public TargetWithTimeAdapter(List<TargetItem> targetItemList,int visibilityState1, int visibilityState2) {
         this.targetItemList = targetItemList;
@@ -207,6 +211,8 @@ public class TargetWithTimeAdapter extends RecyclerView.Adapter<TargetWithTimeAd
             requestData.put("targetName", targetItem.getTargetName());
             requestData.put("ifPoints", 1);
             requestData.put("targetId", Long.valueOf(targetItem.getTargetId()));
+
+            targetPoint=targetItem.getTargetPoint();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -226,6 +232,7 @@ public class TargetWithTimeAdapter extends RecyclerView.Adapter<TargetWithTimeAd
                 if (response.isSuccessful()) {
                     // 从数据源中删除项
                     targetItemList.remove(position);
+                    userPoint = String.valueOf(Integer.parseInt(userPoint) + Integer.parseInt(targetPoint));
 
                     // 通知适配器删除了特定位置的项
                     ((Activity) context).runOnUiThread(new Runnable() {
@@ -240,6 +247,7 @@ public class TargetWithTimeAdapter extends RecyclerView.Adapter<TargetWithTimeAd
                         @Override
                         public void run() {
                             notifyItemRangeChanged(position, targetItemList.size());
+                            navPointTextView.setText(userPoint);
                             Toast.makeText(context.getApplicationContext(), "完成目标", Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -289,6 +297,8 @@ public class TargetWithTimeAdapter extends RecyclerView.Adapter<TargetWithTimeAd
             targetWithTimePointCardView = itemView.findViewById(R.id.targetWithTimePointCardView);
             targetWithTimeDelete = itemView.findViewById(R.id.targetWithTimeDelete);
             targetWithTimeDayDifference = itemView.findViewById(R.id.targetWithTimeDayDifference);
+
+            navPointTextView = Nav.findViewById(R.id.navPointTextView);
         }
     }
 }
