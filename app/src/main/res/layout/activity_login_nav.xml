@@ -64,6 +64,7 @@
             android:orientation="horizontal"
             android:gravity="center">
             <androidx.cardview.widget.CardView
+                android:id="@+id/qqCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="50dp"
@@ -82,6 +83,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/wxCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="50dp"

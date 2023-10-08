@@ -6,8 +6,10 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import java.util.ArrayList;
@@ -19,6 +21,8 @@ import Item.CarouselItem;
 public class LoginNavActivity extends AppCompatActivity {
     private TextView userAgreement;
     private TextView privacyPolicy;
+    private CardView qqCardView;
+    private CardView wxCardView;
 
     private ViewPager2 viewPager;
     private List<CarouselItem> carouselItems = new ArrayList<>();
@@ -36,16 +40,32 @@ public class LoginNavActivity extends AppCompatActivity {
         userAgreement=findViewById(R.id.userAgreement);
         privacyPolicy=findViewById(R.id.privacyPolicy);
 
+        qqCardView=findViewById(R.id.qqCardView);
+        wxCardView=findViewById(R.id.wxCardView);
+
+        qqCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "功能开发中", Toast.LENGTH_SHORT).show();
+            }
+        });
+        wxCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "功能开发中", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         userAgreement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(UserAgreementActivity.class);
+                startActivityReturn(UserAgreementActivity.class);
             }
         });
         privacyPolicy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(PrivacyPolicyActivity.class);
+                startActivityReturn(PrivacyPolicyActivity.class);
             }
         });
 
@@ -98,5 +118,9 @@ public class LoginNavActivity extends AppCompatActivity {
         Intent intent = new Intent(this, cls);
         this.startActivity(intent);
         this.finish(); // 关闭当前活动
+    }
+    private void startActivityReturn(Class<?> cls) {
+        Intent intent = new Intent(this, cls);
+        this.startActivity(intent);
     }
 }
