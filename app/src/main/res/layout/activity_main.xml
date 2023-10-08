@@ -83,14 +83,15 @@
                     android:layout_weight="0.5"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="0dp">
-
                     <TextView
                         android:id="@+id/timerTagNameTextView"
-                        android:layout_width="50dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:background="@color/danZi"
                         android:gravity="center"
-                        android:text="测试"
+                        android:text="hhhhhh"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
                         android:textColor="#304FFE"
                         android:textSize="12sp" />
 

@@ -80,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private boolean isTimerRunning = false;
 
+    String ifTagNull=null;
+
 
 
 
@@ -135,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         navPointTextView = Nav.findViewById(R.id.navPointTextView);
 
 
+
         arrowDownImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -166,12 +169,16 @@ public class MainActivity extends AppCompatActivity {
         timeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isTimerRunning) {
-                    // 开始计时器
-                    startTimer();
-                } else {
-                    // 取消计时器
-                    cancelTimer();
+                if("1".equals(ifTagNull)){
+                    Toast.makeText(getApplicationContext(), "还没有标签，快去建立吧", Toast.LENGTH_SHORT).show();
+                }else{
+                    if (!isTimerRunning) {
+                        // 开始计时器
+                        startTimer();
+                    } else {
+                        // 取消计时器
+                        cancelTimer();
+                    }
                 }
             }
         });
@@ -341,6 +348,7 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject jsonResponse = new JSONObject(responseBody);
                         JSONArray data = jsonResponse.getJSONArray("data");
 
+
                         // 清空已有数据
                         tagMenuList.clear();
 
@@ -354,34 +362,54 @@ public class MainActivity extends AppCompatActivity {
                             String tagMinute = item.getString("tagMinute");
                             String tagId = item.getString("id");
 
+                            ifTagNull=item.getString("ifTagNull");
+
 
                             // 创建TagItem对象并添加到tagList中
                             tagMenuList.add(new TagItem(tagName, tagDescribe,tagPoint,tagHour,tagMinute,tagId));
                         }
 
-                        String hour = tagMenuList.get(0).getTagHour();
-                        String minute = tagMenuList.get(0).getTagMinute();
+                        if("1".equals(ifTagNull)){
+                            // 更新 UI，确保在主线程中执行
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    timerTextView.setText("00:00:00");
+                                    timerTagNameTextView.setText("快去建立标签吧");
+                                    // 通知适配器数据已更新
+                                    tagMenuAdapter.notifyDataSetChanged();
 
-                        // 将字符串转换为整数
-                        int hourInt = Integer.parseInt(hour);
-                        int minuteInt = Integer.parseInt(minute);
+                                    // 禁止setOnClickListener
+                                    tagMenuNav.setOnClickListener(null);
 
-                        tagPoint=tagMenuList.get(0).getTagPoint();
-                        tagName=tagMenuList.get(0).getTagName();
+                                }
+                            });
+                        }else{
+                            String hour = tagMenuList.get(0).getTagHour();
+                            String minute = tagMenuList.get(0).getTagMinute();
 
-                        // 更新 UI，确保在主线程中执行
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                // 使用String.format来格式化时间
-                                timer = String.format("%02d:%02d:00", hourInt, minuteInt);
-                                timerTextView.setText(timer);
-                                timerTagNameTextView.setText(tagName);
-                                // 通知适配器数据已更新
-                                tagMenuAdapter.notifyDataSetChanged();
+                            // 将字符串转换为整数
+                            int hourInt = Integer.parseInt(hour);
+                            int minuteInt = Integer.parseInt(minute);
 
-                            }
-                        });
+                            tagPoint=tagMenuList.get(0).getTagPoint();
+                            tagName=tagMenuList.get(0).getTagName();
+
+                            // 更新 UI，确保在主线程中执行
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // 使用String.format来格式化时间
+                                    timer = String.format("%02d:%02d:00", hourInt, minuteInt);
+                                    timerTextView.setText(timer);
+                                    timerTagNameTextView.setText(tagName);
+                                    // 通知适配器数据已更新
+                                    tagMenuAdapter.notifyDataSetChanged();
+
+                                }
+                            });
+
+                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
