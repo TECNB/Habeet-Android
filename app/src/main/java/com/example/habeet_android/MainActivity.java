@@ -352,10 +352,11 @@ public class MainActivity extends AppCompatActivity {
                             String tagPoint = item.getString("tagPoint");
                             String tagHour = item.getString("tagHour");
                             String tagMinute = item.getString("tagMinute");
+                            String tagId = item.getString("id");
 
 
                             // 创建TagItem对象并添加到tagList中
-                            tagMenuList.add(new TagItem(tagName, tagDescribe,tagPoint,tagHour,tagMinute));
+                            tagMenuList.add(new TagItem(tagName, tagDescribe,tagPoint,tagHour,tagMinute,tagId));
                         }
 
                         String hour = tagMenuList.get(0).getTagHour();

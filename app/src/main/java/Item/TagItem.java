@@ -1,6 +1,7 @@
 package Item;
 
 public class TagItem {
+    private String tagId;
     private String tagName;
     private String tagDescribe;
 
@@ -21,12 +22,13 @@ public class TagItem {
         isDetailsVisible = visible;
     }
 
-    public TagItem(String tagName, String tagDescribe,String tagPoint,String tagHour,String tagMinute) {
+    public TagItem(String tagName, String tagDescribe,String tagPoint,String tagHour,String tagMinute,String tagId) {
         this.tagName = tagName;
         this.tagDescribe = tagDescribe;
         this.tagPoint = tagPoint;
         this.tagHour = tagHour;
         this.tagMinute = tagMinute;
+        this.tagId=tagId;
     }
 
     public String getTagName() {
@@ -47,6 +49,9 @@ public class TagItem {
 
     public String getTagMinute() {
         return tagMinute;
+    }
+    public String getTagId() {
+        return tagId;
     }
 
 }

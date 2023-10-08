@@ -3,6 +3,7 @@ package Adapter;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.habeet_android.CreateActivity;
 import com.example.habeet_android.R;
 
 import java.io.IOException;
@@ -29,11 +31,20 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+
 public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
 
     private List<TagItem> tagItemList;
     private int visibilityState1 = View.VISIBLE;
     private int visibilityState2 = View.GONE;
+
+    private String tagName;
+    private String tagPoint;
+    private String tagDescribe;
+    private String tagHour;
+    private String tagMinute;
+    private String tagId;
+
 
     public TagAdapter(List<TagItem> tagItemList) {
         this.tagItemList = tagItemList;
@@ -96,6 +107,43 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
                 @Override
                 public void onClick(View view) {
                     deleteTag(tagItem, holder.getAdapterPosition(), holder.itemView.getContext());
+                }
+            });
+
+            holder.detailEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((Activity) holder.itemView.getContext()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            tagName=tagItem.getTagName();
+                            tagDescribe=tagItem.getTagDescribe();
+                            tagPoint=tagItem.getTagPoint();
+                            tagHour=tagItem.getTagHour();
+                            tagMinute=tagItem.getTagMinute();
+                            tagId=tagItem.getTagId();
+
+
+                            // 创建一个Intent，从当前的上下文（即RecyclerView所在的Activity）跳转到CreatActivity
+                            Intent intent = new Intent(holder.itemView.getContext(), CreateActivity.class);
+
+                            // 在Intent中添加任何需要传递到CreateActivity的额外数据
+                            intent.putExtra("sourceActivity", "Tag");
+                            intent.putExtra("ifUpdate", "1");
+                            // 在Intent中添加需要传递的数据
+                            intent.putExtra("tagName", tagName);
+                            intent.putExtra("tagDescribe", tagDescribe);
+                            intent.putExtra("tagPoint", tagPoint);
+                            intent.putExtra("tagHour", tagHour);
+                            intent.putExtra("tagMinute", tagMinute);
+                            intent.putExtra("tagId", tagId);
+
+                            // 启动CreateActivity
+                            holder.itemView.getContext().startActivity(intent);
+
+
+                        }
+                    });
                 }
             });
 
@@ -188,6 +236,7 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
         TextView tagNameTextView;
         TextView tagDescriptionTextView;
 
+
         // 获取activity_nav.xml中的根布局
         View Nav;
         ImageView navDelete;
@@ -198,10 +247,12 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
             tagNameTextView = itemView.findViewById(R.id.tagName);
             tagDescriptionTextView = itemView.findViewById(R.id.tagDescription);
 
+
             Nav = ((Activity) itemView.getContext()).findViewById(R.id.Nav);
             navDelete = Nav.findViewById(R.id.navDelete);
             detailEdit = itemView.findViewById(R.id.detailEdit);
             detailDelete = itemView.findViewById(R.id.detailDelete);
         }
     }
+
 }

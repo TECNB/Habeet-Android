@@ -54,6 +54,9 @@ public class CreateActivity extends AppCompatActivity {
     private TextView saveTextView;
 
     private String status;
+    private String ifUpdate;
+
+    private Long Id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,15 @@ public class CreateActivity extends AppCompatActivity {
 
         // 获取传递的标志
         String sourceActivity = getIntent().getStringExtra("sourceActivity");
+        String tagName = getIntent().getStringExtra("tagName");
+        String tagDescribe = getIntent().getStringExtra("tagDescribe");
+        String tagPoint = getIntent().getStringExtra("tagPoint");
+        String tagHour = getIntent().getStringExtra("tagHour");
+        String tagMinute = getIntent().getStringExtra("tagMinute");
+        String tagId = getIntent().getStringExtra("tagId");
+        ifUpdate = getIntent().getStringExtra("ifUpdate");
+
+
 
         // 根据不同的标志设置不同的标题
         if ("Tag".equals(sourceActivity)) {
@@ -116,6 +128,17 @@ public class CreateActivity extends AppCompatActivity {
         describeEditText=findViewById(R.id.Describe);
 
         saveTextView=findViewById(R.id.Save);
+
+        if ("1".equals(ifUpdate)){
+            nameEditText.setText(tagName);
+            describeEditText.setText(tagDescribe);
+            deadlineTextView.setText(tagHour+"小时"+tagMinute+"分钟");
+            scoreTextView.setText(tagPoint+" Point");
+            timeMinute=Integer.valueOf(tagHour);
+            timeMinute=Integer.valueOf(tagMinute);
+            Point=Integer.valueOf(tagPoint);
+            Id=Long.valueOf(tagId);
+        }
         saveTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -146,6 +169,7 @@ public class CreateActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "请选择分数", Toast.LENGTH_SHORT).show();
                     return; // 如果Point为0，不执行后续操作
                 }
+
 
                 // 根据不同的标志进行不同的创建
                 if ("Tag".equals(sourceActivity)) {
@@ -178,7 +202,13 @@ public class CreateActivity extends AppCompatActivity {
             requestData.put("tagPoint", Point);
             requestData.put("tagHour", timeHour);
             requestData.put("tagMinute", timeMinute);
-            requestData.put("ifTagUpdate", 0);
+            if ("1".equals(ifUpdate)){
+                requestData.put("ifTagUpdate", 1);
+                requestData.put("tagId",Id );
+            }else {
+                requestData.put("ifTagUpdate", 0);
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -34,7 +34,7 @@ import okhttp3.Response;
 public class TagActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TagAdapter tagAdapter;
-     private List<TagItem> tagList;
+    private List<TagItem> tagList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,10 +116,11 @@ public class TagActivity extends AppCompatActivity {
                             String tagPoint = item.getString("tagPoint");
                             String tagHour = item.getString("tagHour");
                             String tagMinute = item.getString("tagMinute");
+                            String tagId = item.getString("id");
 
                             if(!"null".equals(tagName)){
                                 // 创建TagItem对象并添加到tagList中
-                                tagList.add(new TagItem(tagName, tagDescribe,tagPoint,tagHour,tagMinute));
+                                tagList.add(new TagItem(tagName, tagDescribe,tagPoint,tagHour,tagMinute,tagId));
                             }
                         }
 
